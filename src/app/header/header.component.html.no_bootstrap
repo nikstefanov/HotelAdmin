@@ -1,0 +1,25 @@
+<!--div class="container-fluid"-->
+  <div class="header">
+    <img src="/assets/koridor_logo_left.png" class="image_margin float-left">
+    <div class="fa fa-bars fa-3x mt-3 mx-4 float-left"></div>
+    <div class="float-left">
+      <div *ngIf="breadcrumb0" class="fa fa-newspaper-o fa-3x"></div>
+      <div *ngIf="breadcrumb0" class="arrow0 float-left"></div>
+      <div *ngIf="breadcrumb0" class="breadcrumb0 float-left">
+          {{ breadcrumb0 }}
+      </div>
+      <div *ngIf="breadcrumb0" class="arrow1 float-left"></div>
+      <div *ngIf="breadcrumb1" class="breadcrumb1 float-left">
+          {{ breadcrumb1 }}
+      </div>
+      <div *ngIf="breadcrumb1" class="arrow2 float-left"></div>
+    </div>
+    <!--span class="align-middle">middle</span-->
+    <img src="/assets/koridor_logo_right.png" class="image_margin float-right">
+    <div class="mr-5 float-right">
+        <div class="user_name">{{ userName }}</div>
+        <div class="user_role">{{ userRole }}</div>
+    </div>
+    <span class="fa fa-user-circle float-right fa-2x mt-4 mr-3 float-right" aria-hidden="true"></span>
+  </div>
+<!--/div-->

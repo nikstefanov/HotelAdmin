@@ -1,0 +1,371 @@
+<div class="background container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="property-panel">
+        <table>
+          <tr>
+            <td>Property :</td>
+            <td>
+              <div class="">
+                <select class="property-select">
+                 <option value="ALTH">ALTH</option>
+                 <option value="H1551">H1551</option>
+                 <option value="regular">regular</option>
+               </select>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="panel">
+        <div class="panel-header">
+          Booking Source
+        </div>
+        <table class="text-right panel-table">
+          <!--colgroup>
+            <col class="panel-table-left-column">
+            <col class="panel-table-right-column">
+          </colgroup-->
+          <tr>
+            <td>GDS</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+          <tr>
+            <td>Brand.com</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+          <tr>
+            <td>Expedia</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+          <tr>
+            <td>Google</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+          <tr>
+            <td>IDS</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+        </table>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          Market Codes
+        </div>
+        <table class="text-right panel-table">
+          <tr>
+            <td>Transient</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+          <tr>
+            <td>Group</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+          <tr>
+            <td>Contract</td>
+            <td><app-toggle></app-toggle></td>
+          </tr>
+        </table>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          Restrict by email domain
+          <i class="fas fa-info-circle info-icon-2"
+            placement="top"
+            ngbTooltip="Use ';' to separate each domain"></i>
+        </div>
+        <textarea  class="textarea_style"></textarea>
+        <button type="button" class="email_save_btn">Save</button>
+      </div>
+      <div class="line-panel-container">
+        <div class="line-panel">
+          <table class="sms-table">
+            <tr>
+              <td>Allow SMS:</td>
+              <td>
+                <i class="fas fa-info-circle info-icon"
+                  placement="top"
+                  ngbTooltip="Allow SMS if email is not available or working.">
+                </i>
+              </td>
+              <td><app-toggle></app-toggle></td>
+            </tr>
+          </table>
+          <!--span class="sms-text">
+            Allow SMS:
+          </span>
+          <span class="sms-toggle">
+            <app-toggle></app-toggle>
+          </span-->
+        </div>
+      </div>
+    </div><!-- column 0 end -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="panel">
+        <div class="panel-header">
+          Max Room Selections
+        </div>
+        <span class="max-room-sel-text">
+          Enter a max room selection per reservation
+        </span>
+        <input type="number" min="0" step="1" class="text-center max-room num-field no-spin">
+        <button type="button" class="email_save_btn">Save</button>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          Restrict by Days Left
+        </div>
+        <span class="max-room-sel-text">
+          Do not allow room selection less than
+        </span>
+        <!--div class="align-middle">
+          <input type="number" min="0" step="1" class="days-left-field num-field no-spin text-center">
+          <span class="max-room-sel-text">
+            days from arrival
+          </span>
+        </div-->
+        <table>
+          <tr>
+            <td>
+              <input type="number" min="0" step="1" class="days-left-field num-field no-spin text-center">
+            </td>
+            <td class="max-room-sel-text">days from arrival</td>
+          </tr>
+        </table>
+        <button type="button" class="email_save_btn">Save</button>
+      </div>
+      <!-- Next code moved to app-blackout-dates-table component.-->
+      <!--div class="panel">
+        <div class="panel-header">
+          Blackout Dates
+        </div>
+        <table>
+          <tr>
+            <td>
+              <button type="button" class="add_dates_btn" (click)="d.toggle()">
+                Add Date Range
+              </button>
+            </td>
+            <td>
+              <input type="text"
+                ngbDatepicker #d="ngbDatepicker"
+                (dateSelect)="onDateSelection($event)"
+                [displayMonths]="2"
+                [dayTemplate]="t"
+                [autoClose]="false"
+                [startDate]="fromDate"
+                style="visibility:hidden"/>
+            </td>
+          </tr>
+        </table>
+        <table class="blackout-dates-table">
+          <tr>
+            <th>From</th>
+            <th>To</th>
+          </tr>
+          <tr *ngFor="let b_dates of blackout_dates; index as i;" (click)="onDateTableLineSelection(i)" [ngClass]="{'selected_table_row': i===selected_table_row}">
+            <td>{{b_dates[0]}}</td>
+            <td>{{b_dates[1]}}</td>
+          </tr>
+        </table>
+        <button type="button" class="edit_btn" (click)="prepareDatesEdit();d.toggle();onClickEdit($event)">Edit</button>
+        <button type="button" class="delete_btn" (click)="onClickDelete($event)">Delete</button>
+        <button type="button" class="save_btn" >Save</button>
+
+
+        <button (click)="d.toggle()">Toggle</button>
+        <pre>From: {{ fromDate | json }} </pre>
+        <pre>To: {{ toDate | json }} </pre>
+      </div-->
+
+      <div class="panel">
+        <div class="panel-header">
+          Blackout Dates
+        </div>
+        <app-blackout-dates-table></app-blackout-dates-table>
+      </div>
+    </div><!-- column 1 end -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <!--div class="panel">
+        <div class="panel-header">
+          Restrict by Days Left
+        </div>
+        <div class="room-type-table-container">
+          <table class="room-type-table">
+            <tr>
+              <th>Room Type</th>
+              <th># of emails /week</th>
+            </tr>
+            <tr>
+              <td>DDBL-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>EXST-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>ADKT-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>KING-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>CORN-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>VW1D-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>VW1K-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>ST01-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>CLBD-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>KING</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>PA-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>ADKS-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>GOVE-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>PRES-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+          </table>
+        </div>
+        <button type="button" class="email_save_btn">Save</button>
+      </div-->
+
+      <!--div class="panel">
+        <div class="panel-header">
+          Restrict by Days Left
+        </div>
+        <div class="room-type-table-container">
+          <div>
+              <span class="d-table-cell">Room Type
+              </span>
+              <span class="d-table-cell"># of emails /week
+              </span>
+          </div>
+          <div>
+              <span class="d-table-cell">DDBL-NO</span>
+              <span class="d-table-cell"><input type="number" min="0" step="1" class="num-field no-spin text-center"></span>
+          </div>
+          <div>
+              <span>EXST-NO</span>
+              <span><input type="number" min="0" step="1" class="num-field no-spin text-center"></span>
+          </div>
+        </div>
+      </div-->
+
+      <div class="panel">
+        <div class="panel-header">
+          Restrict by Days Left
+        </div>
+        <div class="room-type-table-container2">
+          <!--div class="room-type-header text-right">
+              <span class="text-left">Room Type
+              </span>
+              <span class="text-right"># of emails /week
+              </span>
+          </div-->
+          <table class="room-type-header-table">
+            <tr>
+              <td>Room Type</td>
+              <td># of emails /week</td>
+            </tr>
+          </table>
+          <table class="room-type-table2">
+            <!--tr>
+              <th>Room Type</th>
+              <th># of emails /week</th>
+            </tr-->
+            <tr>
+              <td>DDBL-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>EXST-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>ADKT-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>KING-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>CORN-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>VW1D-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>VW1K-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>ST01-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>CLBD-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>KING</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>PA-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>ADKS-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>GOVE-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+            <tr>
+              <td>PRES-NO</td>
+              <td><input type="number" min="0" step="1" class="num-field no-spin text-center"></td>
+            </tr>
+          </table>
+        </div>
+        <button type="button" class="email_save_btn">Save</button>
+      </div>
+
+    </div><!-- column 2 end -->
+  </div>
+</div>

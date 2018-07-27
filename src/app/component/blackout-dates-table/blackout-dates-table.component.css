@@ -1,0 +1,100 @@
+
+
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+.selected_table_row{
+  background-color: #5e9dbc;
+  color:white;
+}
+
+.blackout-dates-table{
+  border: 1px solid #e0e0e0;
+  border-collapse: separate; /* allow spacing between cell borders */
+  border-spacing: 0 5px;  /*NOTE: syntax is <horizontal value> <vertical value> */
+  margin-left: 15px;
+  margin-bottom: 10px;
+  width: 90%;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.blackout-dates-table td:nth-child(1){
+  text-align: center;
+}
+.blackout-dates-table td:nth-child(2){
+  text-align: center;
+}
+.blackout-dates-table>tr{
+  margin-bottom: 15px;
+}
+.blackout-dates-table th{
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+.add_dates_btn{
+  border: 1px solid #e0e0e0;
+  color: white;
+  background-color: #5e9dbc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 147px;
+  margin-bottom:15px;
+  margin-left:15px;
+}
+.delete_btn{
+   display: inline;
+   border: 1px solid #e0e0e0;
+   color: white;
+   background-color: #8f2a41;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 60px;
+   margin-bottom:10px;
+   margin-left:17px;
+}
+.edit_btn{
+   display: inline;
+   border: 1px solid #e0e0e0;
+   color: white;
+   background-color: #4eb47f;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 60px;
+   margin-bottom:10px;
+   margin-left:65px;
+}
+.save_btn{
+   display: inline;
+   border: 1px solid #e0e0e0;
+   color: white;
+   background-color: #5e9dbc;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 60px;
+   margin-bottom:10px;
+   margin-left:17px;
+}
+.popover-background{
+  min-width: 500px;
+}
+.dr-popover-btn-table{
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}

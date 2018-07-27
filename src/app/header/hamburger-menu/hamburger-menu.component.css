@@ -1,0 +1,78 @@
+.background{
+ opacity:0.8;
+ background-color:#ccc;
+ width:100%;
+ height:100%;
+ position:fixed;
+ z-index: 1;
+}
+.user_menu{
+  position:fixed;
+  z-index: 5;
+  background-color: #ffffff;
+  margin-top:6px;
+  padding:2px;
+  user-select: none;
+  cursor: pointer;
+}
+
+@media (min-width:576px) {
+  .left_margin{
+    left: 90px;
+  }
+}
+@media (max-width:575px) {
+  .left_margin{
+    left: 6px;
+  }
+}
+
+.image_margin{
+   width:17%;
+   height:17%;
+   margin-right: 15px;
+}
+
+.user_menu>div{
+  line-height: 60px;
+  font-size: 23px;
+  color: #031a41;
+  padding-left: 25px;
+  padding-right: 20px;
+  width: 320px;
+}
+
+.user_menu>div:hover{
+  padding-left:25px;
+  padding-right:20px;
+  background-color: #5e9dbc;
+  color: white;
+}
+
+.angle_button{
+  line-height: 60px;
+}
+
+.sub_menu>div{
+  line-height: 50px;
+  padding-left: 70px;
+  font-size:18px;
+}
+
+.sub_menu>div:hover{
+  color: #031a41;
+}
+.sub_menu>a{
+  line-height: 50px;
+  padding-left: 70px;
+  font-size:18px;
+  text-decoration: none;
+}
+.sub_menu>a:hover{
+  color: #031a41;
+}
+.user_icon{
+  font-size: 30px;
+  margin-right: 19px;
+  margin-top: 0px;
+}

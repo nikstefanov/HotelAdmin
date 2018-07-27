@@ -1,0 +1,69 @@
+<table>
+  <tr>
+    <td>
+      <!--button type="button" class="add_dates_btn" (click)="d.toggle()"-->
+      <button type="button" class="add_dates_btn"
+        (click)="onClickAdd($event)">
+        Add Date Range
+      </button>
+    </td>
+    <td>
+      <!--input type="text"
+        ngbDatepicker #d="ngbDatepicker"
+        (dateSelect)="onDateSelection($event)"
+        [displayMonths]="2"
+        [dayTemplate]="day_t"
+        [autoClose]="false"
+        [startDate]="fromDate"
+        style="visibility:hidden"/-->
+    </td>
+  </tr>
+</table>
+<table class="blackout-dates-table"
+  [ngbPopover]="popContent" popoverTitle="Blackout Range" #ppov="ngbPopover" triggers="manual"
+  container="body" popoverClass="popover-background">
+  <tr>
+    <th>From</th>
+    <th>To</th>
+  </tr>
+  <tr *ngFor="let b_dates of blackout_dates; index as i;" (click)="onDateTableLineSelection(i)" [ngClass]="{'selected_table_row': i===selected_table_row}">
+    <td>{{b_dates[0]}}</td>
+    <td>{{b_dates[1]}}</td>
+  </tr>
+</table>
+<!--button type="button" class="edit_btn" (click)="prepareDatesEdit();d.toggle();onClickEdit($event)">Edit</button-->
+<button type="button" class="edit_btn" (click)="onClickEdit($event)">Edit</button>
+<button type="button" class="delete_btn" (click)="onClickDelete($event)">Delete</button>
+<button type="button" class="save_btn" >Save</button>
+
+
+<!--button (click)="d.toggle()">Toggle</button>
+<pre>From: {{ fromDate | json }} </pre>
+<pre>To: {{ toDate | json }} </pre-->
+
+
+<ng-template #day_t let-date="date" let-focused="focused">
+  <span class="custom-day"
+        [class.focused]="focused"
+        [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+        [class.faded]="isHovered(date) || isInside(date)"
+        (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null">
+    {{ date.day }}
+  </span>
+</ng-template>
+<ng-template #popContent let-greeting="greeting">
+  <!--{{greeting}}, <b>{{name}}</b>!-->
+  <ngb-datepicker #drpicker (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="day_t" [startDate]="fromDate">
+  </ngb-datepicker>
+  <table class="dr-popover-btn-table">
+    <tr>
+      <td>
+          <button type="button" class="save_btn" (click)="onClickApply($event)">Apply</button>
+      </td>
+      <td>
+        <button type="button" class="delete_btn" (click)="ppov.close()">Close</button>
+      </td>
+    </tr>
+  </table>
+</ng-template>

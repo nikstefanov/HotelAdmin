@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: century_gothic;
+    src: url(font/CenturyGothic.ttf);
+}
+
+body{
+  font-family: century_gothic, Arial, serif;
+}

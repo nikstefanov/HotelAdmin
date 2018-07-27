@@ -1,0 +1,66 @@
+<div class="background" (click)="closeMenus($event)"></div>
+<span class="user_menu left_margin">
+  <div (click)="toggleSubMenu($event,0)">
+    <span class="fas fa-tachometer-alt user_icon" aria-hidden="true"></span>
+    Dashboard
+    <span class="fas angle_button float-right"
+      [ngClass]="{'fa-angle-down':showSubMenu[0],'fa-angle-up':!showSubMenu[0]}">
+    </span>
+    <div *ngIf="showSubMenu[0]" class="sub_menu" (click)="clickHamburgerMenu($event)">
+      <div>Dashboard Item 1</div>
+      <div>Dashboard Item 2</div>
+    </div>
+  </div>
+  <div (click)="toggleSubMenu($event,1)">
+    <span class="far fa-newspaper user_icon" aria-hidden="true">
+    </span>
+    Reports
+    <span class="fas angle_button float-right"
+      [ngClass]="{'fa-angle-down':showSubMenu[1],'fa-angle-up':!showSubMenu[1]}">
+    </span>
+    <div *ngIf="showSubMenu[1]" class="sub_menu" (click)="clickHamburgerMenu($event)">
+      <div>Reports Menu Item 1</div>
+      <div>Reports Menu Item 2</div>
+    </div>
+  </div>
+  <div (click)="toggleSubMenu($event,2)">
+    <span class="fas fa-hotel user_icon" aria-hidden="true">
+    </span>
+    Property Config
+    <span class="fas angle_button float-right"
+      [ngClass]="{'fa-angle-down':showSubMenu[2],'fa-angle-up':!showSubMenu[2]}">
+    </span>
+    <div *ngIf="showSubMenu[2]" class="sub_menu" (click)="clickHamburgerMenu($event)">
+      <div>Pictures</div>
+      <div routerLink="/property_config/settings">Settings</div>
+      <div>Loyality Settings</div>
+      <div>Upgrade Settings</div>
+      <div>Rooms Import</div>
+      <div>Blackout Rooms</div>
+    </div>
+  </div>
+  <div (click)="toggleSubMenu($event,3)">
+    <span class="fas fa-cog user_icon" aria-hidden="true">
+    </span>
+    Admin
+    <span class="fas angle_button float-right"
+      [ngClass]="{'fa-angle-down':showSubMenu[3],'fa-angle-up':!showSubMenu[3]}">
+    </span>
+    <div *ngIf="showSubMenu[3]" class="sub_menu" (click)="clickHamburgerMenu($event)">
+      <div>Admin Menu Item 1</div>
+      <div>Admin Menu Item 2</div>
+    </div>
+  </div>
+  <div (click)="toggleSubMenu($event,4)">
+    <span class="far fa-envelope user_icon" aria-hidden="true">
+    </span>
+    Demo Email
+    <span class="fas angle_button float-right"
+      [ngClass]="{'fa-angle-down':showSubMenu[4],'fa-angle-up':!showSubMenu[4]}">
+    </span>
+    <div *ngIf="showSubMenu[4]" class="sub_menu" (click)="clickHamburgerMenu($event)">
+      <div>Demo Email Menu Item 1</div>
+      <div>Demo Email Menu Item 2</div>
+    </div>
+  </div>
+</span>
