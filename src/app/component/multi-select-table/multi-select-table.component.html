@@ -1,0 +1,32 @@
+<div class="select_container">
+  <div #options_table_container class="options_table_container">
+    <table class="options_table">
+      <tr *ngFor="let option of options; index as i;"
+        (click)="toggleLineSelection(i)"
+        [ngClass]="{'selected_table_row': optionsMap[i]}">
+        <td>
+          {{option}}
+        </td>
+      </tr>
+      <!--tr [ngClass]="{'d-table-row':newOptionInput,'d-none':!newOptionInput}"-->
+      <tr class="d-none">
+        <td>
+          <input type="text" class="new_option_field"
+          (keyup.enter)="onNewOptionEntered($event)"
+          [ngbTooltip]="newOptionTooltip" placement="bottom"
+          #newOptionTooltip="ngbTooltip" triggers="focus:blur"
+          (blur)="showNewOptionField(false)"/>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <button type="button" class="new_btn" (click)="showNewOptionField(true)">New</button>
+</div>
+<ng-template #newOptionTooltip>
+  <div class="newOptionTooltip">
+    When done, press <b>Enter</b>.
+    <br/>
+    To cancel, leave empty and press <b>Enter</b> or click somewhere else.
+  </div>
+</ng-template>
+<!-- (blur)="showNewOptionField(false)"-->

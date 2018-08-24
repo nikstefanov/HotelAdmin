@@ -1,0 +1,74 @@
+.input_container{
+  width: 90px;
+  height: 46px;
+}
+.input_table{
+  width: 100%;
+  border: 1px solid #cfcfcf;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 6px;
+}
+.non_active_button{
+  line-height: 1;
+  width: 22px;
+  font-size: 18px;
+  color: #609dba;
+  background-color: #c7ecfe;
+  border-left: 1px solid #cfcfcf;
+  border-top: 1px solid #cfcfcf;
+  cursor: pointer;
+
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+.active_button{
+  line-height: 1;
+  width: 22px;
+  font-size: 18px;
+  color: #c7ecfe;
+  background-color: #609dba;
+  border-left: 1px solid #cfcfcf;
+  border-top: 1px solid #cfcfcf;
+  cursor: pointer;
+
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+.discount_label{
+  line-height: 1;
+  text-align: center;
+  font-size: 23px;
+  color: #c7ecfe;
+  background-color: white;
+
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+.input_table tr:first-child td:last-child{
+  border-top-right-radius: 6px;
+  text-align: center;
+}
+.input_table tr:last-child td:last-child{
+  border-bottom-right-radius: 6px;
+  text-align: center;
+}
+.input_field{
+  width: 42px;
+  font-size: 30px;
+  border: 0px none;
+  outline: none;
+  color: #9c9c9c;
+}

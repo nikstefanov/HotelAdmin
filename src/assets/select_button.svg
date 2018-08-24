@@ -1,0 +1,7 @@
+<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='37px' width='35px'>
+  <style>
+    .text{ font: bold 14px sans-serif; }
+  </style>
+  <text x='11' y='25' fill='black' font-size='14' font-weight='bold' class='text'>&#xFE40;</text>
+  <line x1='0' y1='0' x2='0' y2='37' style='stroke:rgb(255,255,255);stroke-width:2' />
+</svg> 

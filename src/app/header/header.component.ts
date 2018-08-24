@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
   showUserMenu: boolean;
   showHamburgerMenu: boolean
 
-  constructor() {
+  constructor(private location: Location) {
     this.userName = 'Nikolay Stefanov';
     this.userRole = 'Administrator';
     this.breadcrumb0 = null;
@@ -27,6 +28,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.location.path());
+    var url_parts = this.location.path().substr(1).split('/');
+    if(url_parts[0]){this.setBreadcrumb0(url_parts[0]);}
+    if(this.breadcrumb0 && url_parts[1]){this.setBreadcrumb1(url_parts[1]);}
+    if(this.breadcrumb0){this.setBreadcrumb0Icon();}
   }
 
   toggleUserMenu(event:MouseEvent){
@@ -53,15 +59,43 @@ export class HeaderComponent implements OnInit {
 
   clickHamburgerMenu(event/*:MouseEvent*/){
     //console.log(event.path[2].childNodes[1].textContent.trim());
-    this.breadcrumb0 = event.path[2].childNodes[1].textContent.trim();
+    /*this.breadcrumb0 = event.path[2].childNodes[1].textContent.trim();
     this.breadcrumb1 = event.toElement.innerHTML;
-    this.setBreadcrumb0Icon();
+    this.setBreadcrumb0Icon();*/
     //this.showUserMenu = false;
     this.showHamburgerMenu = false;
   }
 
   get clickHamburgerMenuFn(){
     return this.clickHamburgerMenu.bind(this);
+  }
+
+  setBreadcrumb0(url_part:string){
+    switch(url_part) {
+      case "property_config": {
+        this.breadcrumb0 = "Property Config";break;
+      }
+      default: {
+        this.breadcrumb0 = null;break;
+      }
+    }
+  }
+
+  setBreadcrumb1(url_part:string){
+    switch(this.breadcrumb0) {
+      case "Property Config": {
+        switch(url_part){
+          case "settings": {this.breadcrumb1="Settings";break;}
+          case "loyalty": {this.breadcrumb1="Loyalty";break;}
+          default: {this.breadcrumb1=null;break;}
+        }
+        break;
+      }
+      default: {
+        this.breadcrumb1=null;
+        break;
+      }
+    }
   }
 
   setBreadcrumb0Icon(){

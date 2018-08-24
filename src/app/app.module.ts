@@ -11,6 +11,10 @@ import { HamburgerMenuComponent } from './header/hamburger-menu/hamburger-menu.c
 import { SettingsComponent } from './property_config/settings/settings.component';
 import { ToggleComponent } from './component/toggle/toggle.component';
 import { BlackoutDatesTableComponent } from './component/blackout-dates-table/blackout-dates-table.component';
+import { LoyaltyComponent } from './property_config/loyalty/loyalty.component';
+import { MultiSelectTableComponent } from './component/multi-select-table/multi-select-table.component';
+import { DiscountInputFieldComponent } from './component/discount-input-field/discount-input-field.component';
+import { RestrictedTextInputComponent } from './component/restricted-text-input/restricted-text-input.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { BlackoutDatesTableComponent } from './component/blackout-dates-table/bl
     HamburgerMenuComponent,
     SettingsComponent,
     ToggleComponent,
-    BlackoutDatesTableComponent
+    BlackoutDatesTableComponent,
+    LoyaltyComponent,
+    MultiSelectTableComponent,
+    DiscountInputFieldComponent,
+    RestrictedTextInputComponent
   ],
   imports: [
     AppRoutingModule,

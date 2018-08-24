@@ -54,7 +54,7 @@
 </ng-template>
 <ng-template #popContent let-greeting="greeting">
   <!--{{greeting}}, <b>{{name}}</b>!-->
-  <ngb-datepicker #drpicker (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="day_t" [startDate]="fromDate">
+  <ngb-datepicker #drpicker (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="day_t" [startDate]="startDate">
   </ngb-datepicker>
   <table class="dr-popover-btn-table">
     <tr>

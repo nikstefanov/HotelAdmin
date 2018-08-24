@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="105" width="35">
+  <defs>
+    <filter id="f3">
+      <feDropShadow dx="0" dy="0" stdDeviation="3"/>
+    </filter>
+  </defs>
+  <polygon points="0,0 0,105 32,53" stroke-width="0" fill="#e8ecf3" filter="url(#f3)"/>
+</svg>
+
+<!--svg xmlns='http://www.w3.org/2000/svg' height='105' width='35'>
+  <defs>
+    <filter id='f3'>
+      <feDropShadow dx='0' dy='0' stdDeviation='3'/>
+    </filter>
+  </defs>
+  <polygon points='0,0 0,105 32,53' stroke-width='0' fill='#e8ecf3' filter='url(#f3)'/>
+</svg-->
+
+<!--svg xmlns='http://www.w3.org/2000/svg' height='105' width='35'><defs><filter id='f3'><feDropShadow dx='0' dy='0' stdDeviation='3'/></filter></defs><polygon points='0,0 0,105 32,53' stroke-width='0' fill='#e8ecf3' filter='url(#f3)'/></svg-->

@@ -1,0 +1,61 @@
+.select_container{
+  margin-left: 14px;
+  padding-bottom: 35px;
+  width:260px;
+}
+.options_table_container{
+  /* display: block; */
+  overflow: auto;
+  width:260px;
+  height: 100px;
+  border: 1px solid #cfcfcf;
+  margin-bottom: 10px;
+}
+.selected_table_row{
+  background-color: #5e9dbc;
+  color:white;
+}
+.options_table{
+  width: 100%;
+}
+.options_table td {
+  cursor: pointer;
+  padding-left: 10px;
+
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+.new_btn{
+   border: 1px solid #e0e0e0;
+   color: white;
+   background-color: #4eb47f;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 60px;
+   float: right;
+   display:block;
+}
+.new_option_field{
+  border: 0px none;
+  outline: none;
+}
+.newOptionTooltip__{
+  background-color: gray;
+}
+
+:host ::ng-deep .tooltip-inner {
+    background-color: #c896d2;
+    color: #fff;
+    font-size: 12px;
+    line-height:1;
+}
+ :host ::ng-deep .bs-tooltip-top .arrow::before {
+    border-top-color: #c896d2;
+}
+ :host ::ng-deep .bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #c896d2;
+}

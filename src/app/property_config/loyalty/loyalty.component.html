@@ -1,0 +1,229 @@
+<div class="background d-flex flex-column">
+  <!--ul class="nav flex-column">
+    <li class="nav-item">
+      <span class="nav-link active" href="#">Loyalty</span>
+    </li>
+    <li class="nav-item">
+      <span class="nav-link" href="#">Not<br/>Loyalty</span>
+    </li>
+  </ul-->
+  <!--div class="property-panel">
+    <table>
+      <tr>
+        <td>Property :</td>
+        <td>
+          <div class="">
+            <select class="property-select">
+             <option value="ALTH">ALTH</option>
+             <option value="H1551">H1551</option>
+             <option value="regular">regular</option>
+           </select>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div-->
+
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="d-flex flex-row justify-content-center align-items-center property">
+      <div class="property_label">Property :
+      </div>
+      <div class="">
+        <select class="property-select">
+         <option value="ALTH">ALTH</option>
+         <option value="H1551">H1551</option>
+         <option value="regular">regular</option>
+       </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <div class="tabs">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <div class="nav-link" (click)="set_loyalty_members(true)"
+            [ngClass]="{'active1': loyalty_members, 'non_active1': !loyalty_members}">
+            <div>Loyalty</div><div>Members</div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-link" (click)="set_loyalty_members(false)"
+            [ngClass]="{'active1': !loyalty_members, 'non_active1': loyalty_members}">
+            <div>Non</div><div>Loyalty</div><div>Members</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex flex-column horiz_container">
+      <div class="horiz_tabs">
+        <ul class="nav">
+          <li class="nav-item">
+            <div class="nav-link" (click)="set_loyalty_members(true)"
+              [ngClass]="{'horiz_active1': loyalty_members, 'horiz_non_active1': !loyalty_members}">
+              Loyalty Members</div>
+          </li>
+          <li class="nav-item">
+            <div class="nav-link" (click)="set_loyalty_members(false)"
+              [ngClass]="{'horiz_active1': !loyalty_members, 'horiz_non_active1': loyalty_members}">
+              Non Loyalty Members</div>
+          </li>
+        </ul>
+      </div>
+      <div class="tab_container">
+        <div class="d-flex flex-wrap justify-content-center">
+          <div class="panel"
+            [ngClass]="{'d-block': loyalty_members, 'd-none': !loyalty_members}">
+            <div class="panel-header">
+              Loyalty Tier Level
+            </div>
+            <!--div class="multi_choice">
+            </div-->
+            <app-multi-select-table [options]="['Ala','Bala','Nica','Marsilia','Zaro']">
+            </app-multi-select-table>
+          </div>
+          <div class="row0_table_container">
+              <table class="row0_table">
+                <tr>
+                  <td>Room selection fee</td>
+                  <td  class="selection_fee_field">
+                    <!-- https://stackoverflow.com/questions/6029674/regex-for-positive-float-numbers -->
+                    <app-restricted-text-input
+                      [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [init_value]="''" [disabled]="false">
+                    </app-restricted-text-input>
+                </tr>
+                <tr>
+                  <td>Upgrade discount</td>
+                  <td>
+                    <app-discount-input-field></app-discount-input-field>
+                  </td>
+                </tr>
+              </table>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="lable">Enable</div>
+        </div>
+        <!--div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="toggle"><app-toggle [(checked)]="invitation_email"></app-toggle></div>
+          <div>
+            <table class="invitation_email_table text-right">
+              <tr><td [ngClass]="{'tab_row_text':invitation_email, 'tab_row_text_inactive':!invitation_email}">
+                Send invitation email</td><td></td></tr>
+              <tr><td class="invitation_email_radio_label"><label for=alpha_input>upon reservation</label></td>
+                <td>
+                  <input type="radio" checked="checked" name="radio" id="alpha_input" [disabled]="!invitation_email">
+                  <label for=alpha_input class="checkmark"></label>
+                </td>
+              </tr>
+              <tr><td class="invitation_email_radio_label"><label for=beta_input>at</label></td>
+                <td>
+                  <input type="radio" checked="checked" name="radio" id="beta_input" [disabled]="!invitation_email">
+                  <label for=beta_input class="checkmark"></label>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr><td class="days_left_text">&nbsp;</td></tr>
+              <tr>
+                <td class="invitation_email_radio_label">&nbsp;</td>
+                <td rowspan="2"
+                  [ngClass]="{'days_left_text':invitation_email, 'days_left_text_inactive':!invitation_email}">
+                  <app-restricted-text-input
+                    [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [init_value]="''" [disabled]="!invitation_email">
+                  </app-restricted-text-input>
+                  days left
+                </td>
+              </tr>
+              <tr>
+                <td class="invitation_email_radio_label">&nbsp;</td>
+              </tr>
+            </table>
+          </div>
+        </div-->
+
+
+        <div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="toggle"><app-toggle [(checked)]="invitation_email"></app-toggle></div>
+          <div>
+            <table class="invitation_email_table text-right">
+              <tr><td [ngClass]="{'tab_row_text':invitation_email, 'tab_row_text_inactive':!invitation_email}">
+                Send invitation email</td><td></td></tr>
+              <tr><td class="invitation_email_radio_label"><label for=alpha_input>upon reservation</label></td>
+                <td>
+                  <input type="radio" checked="checked" name="radio" id="alpha_input" [disabled]="!invitation_email">
+                  <label for=alpha_input class="checkmark"></label>
+                </td>
+              </tr>
+              <tr><td class="invitation_email_radio_label"><label for=beta_input>at</label></td>
+                <td>
+                  <input type="radio" checked="checked" name="radio" id="beta_input" [disabled]="!invitation_email">
+                  <label for=beta_input class="checkmark"></label>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="d-flex align-items-center align-self-end invitation_email_days_bgr"><!---->
+            <span class="triangle105x32"></span>
+            <div [ngClass]="{'days_left_text':invitation_email,
+              'days_left_text_inactive':!invitation_email,
+              'invitation_email_days_left_margin':true}">
+              <app-restricted-text-input
+                [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [init_value]="''" [disabled]="!invitation_email">
+              </app-restricted-text-input>
+              days left
+            </div>
+          </div>
+        </div>
+
+
+        <!--div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="d-flex flex-column" style="background-color:pink">
+              <div class="invisible">Send invitation email</div>
+              <div>
+                <input type="radio" checked="checked" name="radio" id="alpha_input" [disabled]="!invitation_email">
+                <label for=alpha_input class="checkmark"></label>
+              </div>
+              <div>
+                <input type="radio" checked="checked" name="radio" id="beta_input" [disabled]="!invitation_email">
+                <label for=beta_input class="checkmark"></label>
+              </div>
+          </div>
+          <div class="align-self-center">
+            <app-restricted-text-input
+              [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [init_value]="''" [disabled]="!invitation_email">
+            </app-restricted-text-input>
+            days left
+          </div>
+        </div-->
+
+
+        <div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="toggle"><app-toggle [(checked)]="reminder_email"></app-toggle></div>
+          <div [ngClass]="{'tab_row_text':reminder_email, 'tab_row_text_inactive':!reminder_email, 'reminder_margin':true}">
+            Send reminder email
+          </div>
+          <div [ngClass]="{'days_left_text':reminder_email,
+            'days_left_text_inactive':!reminder_email,
+            'reminder_email_days_left_margin':true}">
+            <app-restricted-text-input
+              [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [init_value]="''" [disabled]="!reminder_email">
+            </app-restricted-text-input>
+            days left
+          </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="toggle"><app-toggle [(checked)]="room_selection"></app-toggle></div>
+          <div [ngClass]="{'tab_row_text':room_selection, 'tab_row_text_inactive':!room_selection}">
+            Allow room selection
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button class="send_button">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

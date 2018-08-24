@@ -153,6 +153,11 @@
 .info-icon{
   color:#266db1;
   font-size:10px;
+  cursor:default;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
 }
 .info-icon-2{
   color:#266db1;
@@ -160,16 +165,24 @@
   background-color: white;
   border-radius: 6px;
   margin-left: 20px;
+  cursor:default;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
 }
 
-::ng-deep .tooltip-inner {
+:host ::ng-deep .tooltip-inner {
     background-color: #c896d2;
     color: #fff;
     font-size: 12px;
     line-height:1;
 }
-::ng-deep .bs-tooltip-top .arrow::before {
+ :host ::ng-deep .bs-tooltip-top .arrow::before {
     border-top-color: #c896d2;
+}
+ :host ::ng-deep .bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #c896d2;
 }
 
 .property-panel{

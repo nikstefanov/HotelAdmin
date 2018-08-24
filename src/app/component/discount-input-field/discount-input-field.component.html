@@ -1,0 +1,19 @@
+<!--div class="input_container"-->
+  <table class="input_table input_container">
+    <tr>
+      <td rowspan='2'>
+        <input type="text" class="input_field" (keyup)="onKey($event)" (paste)="onPaste($event)"/>
+      </td>
+      <td rowspan='2' class="discount_label">{{percent_discount?'%':'$'}}
+      </td>
+      <td [ngClass]="{'active_button':percent_discount,'non_active_button':!percent_discount}"
+        (click)="set_percent_discount(true)">%
+      </td>
+    </tr>
+    <tr>
+      <td [ngClass]="{'active_button':!percent_discount,'non_active_button':percent_discount}"
+        (click)="set_percent_discount(false)">$
+      </td>
+    </tr>
+  </table>
+<!--/div-->

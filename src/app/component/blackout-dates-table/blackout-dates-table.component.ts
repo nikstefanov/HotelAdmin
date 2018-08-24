@@ -25,6 +25,7 @@ export class BlackoutDatesTableComponent {
       [['7/15/2018','7/25/2018'],['8/15/2018','8/25/2018'],['9/15/2018','9/25/2018']];
     selected_table_row:number = -1;
     hoveredDate: NgbDateStruct;
+    startDate: NgbDateStruct;
     fromDate: NgbDateStruct;
     toDate: NgbDateStruct;
     dateFormatter: NgbDateParserFormatter;
@@ -101,14 +102,16 @@ export class BlackoutDatesTableComponent {
     onClickEdit(event: MouseEvent){
       if(this.selected_table_row > -1){
         this.prepareDatesEdit();
+        this.startDate = this.fromDate;
         this.popover.open();
       }
     }
 
     onClickAdd(event: MouseEvent){
       this.selected_table_row = -1;
-      this.fromDate = this.today;
-      this.toDate = this.today;
+      this.startDate = this.today;
+      this.fromDate = null;
+      this.toDate = null;
       this.popover.open();
     }
 

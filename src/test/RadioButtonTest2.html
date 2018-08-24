@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title></title>
+    <meta content="">
+    <style>
+    /*
+    input{display:none;}
+    .checkmark {
+	position: absolute;
+	height: 25px;
+	width: 25px;
+	background-color: #eee;
+	border-radius: 50%;
+    }
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+    input:checked ~ .checkmark {
+      background-color: #2196F3;
+    }
+    .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	content:"A";
+	width: 22px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+     }*/
+     input{display:none;}
+     .checkmark:after {
+        content: "";
+	display: inline-block;
+	/*background: url("./assets/radio_button_unchecked.svg") no-repeat;*/
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='32' width='32'><circle cx='16' cy='16' r='16' stroke='#cfcfcf' stroke-width='1' fill='white' /></svg>");	
+	width: 32px;
+	height: 32px;
+     }
+     #alpha_input:checked ~ .checkmark:after,#beta_input:checked ~ .checkmark:after{
+	display: inline-block;
+	/*background: url("./assets/radio_button_checked.svg") no-repeat;*/
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='32' width='32'><circle cx='16' cy='16' r='16' stroke='#cfcfcf' stroke-width='1' fill='white'/><circle cx='16' cy='16' r='11' fill='#cfcfcf'/></svg>");
+	width: 32px;
+	height: 32px;
+     }
+    </style>
+  </head>
+  <body>
+    <div>      
+      <label for=alpha_input>Alpha</label>
+      <input type="radio" checked="checked" name="radio" id="alpha_input">
+      <label for=alpha_input class="checkmark"></label>
+    </div>
+    <div>      
+      <label for=beta_input>Beta</label>
+      <input type="radio" name="radio" id="beta_input">
+      <label for=beta_input class="checkmark"></label>
+     </div>
+  </body>
+</html>
