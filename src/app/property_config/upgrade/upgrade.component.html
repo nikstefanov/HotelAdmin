@@ -1,0 +1,127 @@
+<div class="background d-flex flex-column">
+
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="d-flex flex-row justify-content-center align-items-center property">
+      <div class="property_label">Property :
+      </div>
+      <div class="">
+        <select class="property-select">
+         <!--option value="ALTH">ALTH</option>
+         <option value="H1551">H1551</option>
+         <option value="regular">regular</option-->
+         <option *ngFor="let data of data_array"
+         value={{data.property}}>{{data.property}}</option>
+       </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-column main_panel">
+      <div class="main_panel_header">
+        Upgrade Settings
+      </div>
+      <div class="add_new_button_row">
+        <button class="add_new_button">
+          Add new upgrade
+        </button>
+      </div>
+      <div class="d-flex flex-row justify-content-start table_header">
+        <div class="c0"></div>
+        <div class="c1"><button class="add_button invisible">Add</button></div>
+        <div class="c2">Room Type</div>
+        <div class="c3">Upgrade Type</div>
+        <div class="c4">Amount</div>
+        <div class="c5">%</div>
+        <div class="c6">Enable Room Type</div>
+        <div class="c7"><button class="edit_button invisible">Edit</button></div>
+        <div class="c8"><button class="delete_button invisible">Delete</button></div>
+        <div class="c9">Enable Upgrade Type</div>
+      </div>
+      <div class="d-flex flex-row justify-content-start">
+        <div class="c0">&#x25B2;</div>
+        <div class="c1"><button class="add_button">Add</button></div>
+        <div class="c_room_type">{{data_array[0].data[0].room_type}}</div>
+        <!--div class="c3">Upgrade Type</div>
+        <div class="c4">Amount</div>
+        <div class="c5">%</div-->
+        <div class="c6"><div class="toggle_big"><app-toggle [(checked)]="data_array[0].data[0].enabled"></app-toggle></div></div>
+        <div class="c7"><button class="edit_button invisible">Edit</button></div>
+        <div class="c8"><button class="delete_button invisible">Delete</button></div>
+        <div class="c9"></div>
+      </div>
+      <div class="d-flex flex-row justify-content-start">
+        <div class="c0"></div>
+        <div class="c1"></div>
+        <div class="c2"></div>
+        <div class="c3">{{data_array[0].data[0].upgrades[0].upgrade_type}}</div>
+        <div class="c4">{{data_array[0].data[0].upgrades[0].amount}}</div>
+        <div class="c5">{{data_array[0].data[0].upgrades[0].percent}}</div>
+        <div class="c6"></div>
+        <div class="c7"><button class="edit_button">Edit</button></div>
+        <div class="c8"><button class="delete_button">Delete</button></div>
+        <div class="c9"><div class="toggle_small"><app-toggle [(checked)]="data_array[0].data[0].upgrades[0].enabled"></app-toggle></div></div>
+      </div>
+      <div class="d-flex flex-row justify-content-start">
+        <div style="flex-basis: 30%;">A</div>
+        <div style="flex-basis: 20%">B</div>
+        <div style="flex-basis: auto;padding-right: 10px;">C</div>
+        <div style="flex-basis: 20%">D</div>
+        <div style="flex-basis: auto">E</div>
+        <div style="flex-basis: 20%">F</div>
+      </div>
+
+      <table class="main_table">
+        <colgroup>
+          <col class="c0_col">
+          <col class="c1_col">
+          <col class="c2_col">
+          <col class="c3_col">
+          <col class="c4_col">
+          <col class="c5_col">
+          <col class="c6_col">
+          <col class="c7_col">
+          <col class="c8_col">
+          <col class="c9_col">
+        </colgroup>
+        <tr>
+          <th class="c0"></th>
+          <th class="c1"><button class="add_button invisible">Add</button></th>
+          <th class="c2"><div class="h2_l0">Room</div><div class="h2_l1">Type</div></th>
+          <th class="c3"><div class="h3_l0">Upgrade</div><div class="h3_l1">Type</div></th>
+          <th class="c4"><div class="h4_l0">Amount</div></th>
+          <th class="c5"><div class="h5_l0">%</div></th>
+          <th class="c6"><div class="h6_l0">Enable</div><div class="h6_l1">Room&nbsp;Type</div></th>
+          <th class="c7"></th>
+          <th class="c8" colspan='2'><!--/th-->
+          <!--th class="c9"--><div class="h9_l0">Enable</div><div class="h9_l1">Upgrade&nbsp;Type</div></th>
+        </tr>
+        <tr>
+          <td class="text-center">&#x25B2;</td>
+          <td class="text-center"><button class="add_button">Add</button></td>
+          <td class="room_type_cell" colspan='4'>{{data_array[0].data[0].room_type}}</td>
+          <!--div class="c3">Upgrade Type</div>
+          <div class="c4">Amount</div>
+          <div class="c5">%</div-->
+          <td class="align-middle"><div class="toggle_big"><app-toggle [(checked)]="data_array[0].data[0].enabled"></app-toggle></div></td>
+          <td class="c7"><button class="edit_button invisible">Edit</button></td>
+          <td class="c8"><button class="delete_button invisible">Delete</button></td>
+          <td class="c9"></td>
+        </tr>
+        <tr>
+          <td class="c0"></td>
+          <td class="c1"></td>
+          <td class="c2"></td>
+          <td class="upgrade_type_cell">{{data_array[0].data[0].upgrades[0].upgrade_type}}</td>
+          <td class="amount_cell">{{data_array[0].data[0].upgrades[0].amount}}</td>
+          <td class="percent_cell">{{data_array[0].data[0].upgrades[0].percent}}</td>
+          <td class="c6"></td>
+          <td class="text-center"><button class="edit_button">Edit</button></td>
+          <td class="text-center"><button class="delete_button">Delete</button></td>
+          <td class="c9"><div class="toggle_small"><app-toggle [(checked)]="data_array[0].data[0].upgrades[0].enabled"></app-toggle></div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>

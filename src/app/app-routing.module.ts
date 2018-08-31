@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {SettingsComponent} from './property_config/settings/settings.component';
 import {LoyaltyComponent} from './property_config/loyalty/loyalty.component';
+import {UpgradeComponent} from './property_config/upgrade/upgrade.component';
 /*
 import {HotelViewComponent} from "./hotel-view/hotel-view.component";
 import {SatelliteViewComponent} from "./satellite-view/satellite-view.component";
@@ -16,7 +17,8 @@ const routes: Routes = [
   {
     path: 'property_config', /*component: HotelViewComponent,*/ children: [
       {path: 'settings', component: SettingsComponent},
-      {path: 'loyalty', component: LoyaltyComponent},/*
+      {path: 'loyalty', component: LoyaltyComponent},
+      {path: 'upgrade', component: UpgradeComponent},/*
       {path: 'satellite', component: SatelliteViewComponent},
       {path: 'map', component: MapViewComponent}*/
     ]

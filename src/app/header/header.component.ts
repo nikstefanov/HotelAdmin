@@ -87,6 +87,7 @@ export class HeaderComponent implements OnInit {
         switch(url_part){
           case "settings": {this.breadcrumb1="Settings";break;}
           case "loyalty": {this.breadcrumb1="Loyalty";break;}
+          case "upgrade": {this.breadcrumb1="Upgrade";break;}
           default: {this.breadcrumb1=null;break;}
         }
         break;

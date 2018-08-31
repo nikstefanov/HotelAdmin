@@ -15,6 +15,7 @@ import { LoyaltyComponent } from './property_config/loyalty/loyalty.component';
 import { MultiSelectTableComponent } from './component/multi-select-table/multi-select-table.component';
 import { DiscountInputFieldComponent } from './component/discount-input-field/discount-input-field.component';
 import { RestrictedTextInputComponent } from './component/restricted-text-input/restricted-text-input.component';
+import { UpgradeComponent } from './property_config/upgrade/upgrade.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RestrictedTextInputComponent } from './component/restricted-text-input/
     LoyaltyComponent,
     MultiSelectTableComponent,
     DiscountInputFieldComponent,
-    RestrictedTextInputComponent
+    RestrictedTextInputComponent,
+    UpgradeComponent
   ],
   imports: [
     AppRoutingModule,
