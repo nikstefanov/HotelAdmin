@@ -15,6 +15,7 @@ export class RestrictedTextInputComponent implements OnInit {
 * (preceding special characters with \ when included in a string) are necessary.
 */
   private regExObj: RegExp;
+  public value:string;
 
 
   constructor() {
@@ -22,6 +23,7 @@ export class RestrictedTextInputComponent implements OnInit {
 
   ngOnInit() {
     this.old_value = this.init_value;
+    this.value =  this.init_value;
   }
 
   ngAfterViewInit() {
@@ -38,6 +40,7 @@ export class RestrictedTextInputComponent implements OnInit {
     }else{
       this.old_value = event.target.value;
     }
+    this.value = event.target.value;
   }
 
 }

@@ -16,6 +16,9 @@ import { MultiSelectTableComponent } from './component/multi-select-table/multi-
 import { DiscountInputFieldComponent } from './component/discount-input-field/discount-input-field.component';
 import { RestrictedTextInputComponent } from './component/restricted-text-input/restricted-text-input.component';
 import { UpgradeComponent } from './property_config/upgrade/upgrade.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { UpgradeComponent } from './property_config/upgrade/upgrade.component';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    NgSelectModule,
+    FormsModule,
     NgbModule.forRoot()
   ],
   providers: [],

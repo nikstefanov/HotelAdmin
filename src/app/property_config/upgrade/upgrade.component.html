@@ -5,12 +5,12 @@
       <div class="property_label">Property :
       </div>
       <div class="">
-        <select class="property-select">
+        <select #property_select class="property-select" (change)="onPropertyChange(property_select.selectedIndex)">
          <!--option value="ALTH">ALTH</option>
          <option value="H1551">H1551</option>
          <option value="regular">regular</option-->
-         <option *ngFor="let data of data_array"
-         value={{data.property}}>{{data.property}}</option>
+         <option *ngFor="let upg_data of upgrade_array"
+         value={{upg_data.property}}>{{upg_data.property}}</option>
        </select>
       </div>
     </div>
@@ -26,7 +26,7 @@
           Add new upgrade
         </button>
       </div>
-      <div class="d-flex flex-row justify-content-start table_header">
+      <!--div class="d-flex flex-row justify-content-start table_header">
         <div class="c0"></div>
         <div class="c1"><button class="add_button invisible">Add</button></div>
         <div class="c2">Room Type</div>
@@ -44,7 +44,7 @@
         <div class="c_room_type">{{data_array[0].data[0].room_type}}</div>
         <!--div class="c3">Upgrade Type</div>
         <div class="c4">Amount</div>
-        <div class="c5">%</div-->
+        <div class="c5">%</div->
         <div class="c6"><div class="toggle_big"><app-toggle [(checked)]="data_array[0].data[0].enabled"></app-toggle></div></div>
         <div class="c7"><button class="edit_button invisible">Edit</button></div>
         <div class="c8"><button class="delete_button invisible">Delete</button></div>
@@ -69,7 +69,7 @@
         <div style="flex-basis: 20%">D</div>
         <div style="flex-basis: auto">E</div>
         <div style="flex-basis: 20%">F</div>
-      </div>
+      </div-->
 
       <table class="main_table">
         <colgroup>
@@ -84,42 +84,72 @@
           <col class="c8_col">
           <col class="c9_col">
         </colgroup>
-        <tr>
-          <th class="c0"></th>
-          <th class="c1"><button class="add_button invisible">Add</button></th>
-          <th class="c2"><div class="h2_l0">Room</div><div class="h2_l1">Type</div></th>
-          <th class="c3"><div class="h3_l0">Upgrade</div><div class="h3_l1">Type</div></th>
-          <th class="c4"><div class="h4_l0">Amount</div></th>
-          <th class="c5"><div class="h5_l0">%</div></th>
-          <th class="c6"><div class="h6_l0">Enable</div><div class="h6_l1">Room&nbsp;Type</div></th>
-          <th class="c7"></th>
-          <th class="c8" colspan='2'><!--/th-->
-          <!--th class="c9"--><div class="h9_l0">Enable</div><div class="h9_l1">Upgrade&nbsp;Type</div></th>
-        </tr>
-        <tr>
-          <td class="text-center">&#x25B2;</td>
-          <td class="text-center"><button class="add_button">Add</button></td>
-          <td class="room_type_cell" colspan='4'>{{data_array[0].data[0].room_type}}</td>
-          <!--div class="c3">Upgrade Type</div>
-          <div class="c4">Amount</div>
-          <div class="c5">%</div-->
-          <td class="align-middle"><div class="toggle_big"><app-toggle [(checked)]="data_array[0].data[0].enabled"></app-toggle></div></td>
-          <td class="c7"><button class="edit_button invisible">Edit</button></td>
-          <td class="c8"><button class="delete_button invisible">Delete</button></td>
-          <td class="c9"></td>
-        </tr>
-        <tr>
-          <td class="c0"></td>
-          <td class="c1"></td>
-          <td class="c2"></td>
-          <td class="upgrade_type_cell">{{data_array[0].data[0].upgrades[0].upgrade_type}}</td>
-          <td class="amount_cell">{{data_array[0].data[0].upgrades[0].amount}}</td>
-          <td class="percent_cell">{{data_array[0].data[0].upgrades[0].percent}}</td>
-          <td class="c6"></td>
-          <td class="text-center"><button class="edit_button">Edit</button></td>
-          <td class="text-center"><button class="delete_button">Delete</button></td>
-          <td class="c9"><div class="toggle_small"><app-toggle [(checked)]="data_array[0].data[0].upgrades[0].enabled"></app-toggle></div></td>
-        </tr>
+        <thead>
+          <tr>
+            <th class=""></th>
+            <th class=""><button class="add_button invisible">Add</button></th>
+            <th class=""><div class="h2_l0">Room</div><div class="h2_l1">Type</div></th>
+            <th class=""><div class="h3_l0">Upgrade</div><div class="h3_l1">Type</div></th>
+            <th class=""><div class="h4_l0">Amount</div></th>
+            <th class=""><div class="h5_l0">%</div></th>
+            <th class=""><div class="h6_l0">Enable</div><div class="h6_l1">Room&nbsp;Type</div></th>
+            <th class=""></th>
+            <th class="" colspan='2'><!--/th-->
+            <!--th class="c9"--><div class="h9_l0">Enable</div><div class="h9_l1">Upgrade&nbsp;Type</div></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let from of upgrade_array[property_index].from; let i=index">
+          <tr>
+            <td class="text-center button_behavior"
+              (click)="is_open_from_room_array[i]=!is_open_from_room_array[i];">
+              {{is_open_from_room_array[i]?'&#x25B2;':'&#x25BC;'}}
+            </td>
+            <td class="text-center"><button class="add_button">Add</button></td>
+            <td class="room_type_cell" colspan='4'>{{from.from_room}}</td>
+            <!--div class="c3">Upgrade Type</div>
+            <div class="c4">Amount</div>
+            <div class="c5">%</div-->
+            <td class="align-middle"><div class="toggle_big"><app-toggle [(checked)]="from.enabled"></app-toggle></div></td>
+            <td class=""><button class="edit_button invisible">Edit</button></td>
+            <td class="text-center"><button class="delete_button" (click)="deleteFromUpgrade(i)">Delete</button></td>
+            <td class=""></td>
+          </tr>
+          <tr *ngFor="let to of (is_open_from_room_array[i]?from.to:[]); let j=index" class="upgrade_row">
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
+            <!--td *ngIf="!is_edit_to_room_array[i][j]" class="upgrade_type_cell">{{to.to_room}}</td-->
+            <td class="upgrade_type_cell_field">
+              <!--app-restricted-text-input #room_name
+                [regex]="'^.*$'" [init_value]="to.to_room" [disabled]="!is_edit_to_room_array[i][j]">
+              </app-restricted-text-input-->
+              <ng-select [items]="room_types" [clearable]='false' class='custom'
+                  #sel  [searchable]='false'   [isOpen]='false'  [ngModel]="to.to_room">
+              </ng-select>
+            </td>
+            <td [ngClass]="{'upgrade_number_field_bcgr_transp': !is_edit_to_room_array[i][j], 'upgrade_number_field_bcgr_gray': is_edit_to_room_array[i][j], 'upgrade_number_field':true}">
+              <app-restricted-text-input #amount
+                [regex]="'^.*$'" [init_value]="to.amount" [disabled]="!is_edit_to_room_array[i][j]">
+              </app-restricted-text-input>
+            </td>
+            <td [ngClass]="{'upgrade_number_field_bcgr_transp': !is_edit_to_room_array[i][j], 'upgrade_number_field_bcgr_gray': is_edit_to_room_array[i][j], 'upgrade_number_field':true}">
+              <app-restricted-text-input #percent
+                [regex]="'^.*$'" [init_value]="to.percent" [disabled]="!is_edit_to_room_array[i][j]">
+              </app-restricted-text-input>
+            </td>
+
+            <!--td class="amount_cell">{{to.amount}}</td>
+            <td class="percent_cell">{{to.percent}}</td-->
+            <td class=""></td>
+            <td class="text-center">
+              <button *ngIf="!is_edit_to_room_array[i][j]" class="edit_button" (click)="is_edit_to_room_array[i][j]=true">Edit</button>
+              <button *ngIf="is_edit_to_room_array[i][j]" class="save_button"
+                (click)="saveUpgrade(i,j,'', amount.value, percent.value);showSelect(sel)">Save</button>
+            </td>
+            <td class="text-center"><button class="delete_button" (click)="deleteUpgrade(i,j)">Delete</button></td>
+            <td class=""><div class="toggle_small"><app-toggle [(checked)]="to.enabled"></app-toggle></div></td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
