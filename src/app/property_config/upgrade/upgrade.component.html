@@ -1,11 +1,21 @@
-<div class="background d-flex flex-column">
+<div class="background d-flex flex-column pink_tooltip">
 
   <div class="d-flex flex-row justify-content-center align-items-center">
     <div class="d-flex flex-row justify-content-center align-items-center property">
       <div class="property_label">Property :
       </div>
-      <div class="">
-        <select #property_select class="property-select" (change)="onPropertyChange(property_select.selectedIndex)">
+      <div class=""
+        ngbTooltip="You must save first."
+        placement="bottom"
+        [disableTooltip]="!is_edit_from_upgrade_any()"
+      >
+        <select #property_select
+          (change)="onPropertyChange(property_select.selectedIndex)"
+          [disabled]="is_edit_from_upgrade_any()"
+          [ngClass]="{'property-select':true,
+                      'color_enabled':!is_edit_from_upgrade_any(),
+                      'color_disabled':is_edit_from_upgrade_any()}"
+          >
          <!--option value="ALTH">ALTH</option>
          <option value="H1551">H1551</option>
          <option value="regular">regular</option-->
@@ -22,9 +32,24 @@
         Upgrade Settings
       </div>
       <div class="add_new_button_row">
-        <button class="add_new_button">
-          Add new upgrade
-        </button>
+        <div class="add_new_button_box"
+              [ngbTooltip]="add_new_button_tooltip"
+              placement="right"
+              [disableTooltip]="!is_edit_from_any() && hasAvailableFromRooms()"
+        >
+        <ng-template #add_new_button_tooltip>
+          {{is_edit_from_any()?'You must save first.':'No remaining unused room types'}}
+        </ng-template>
+          <button (click)="addRoom()"
+            [disabled]="is_edit_from_any() || !hasAvailableFromRooms()"
+            [ngClass]="{'add_new_button':true,
+                      'color_disabled':is_edit_from_any() || !hasAvailableFromRooms(),
+                      'color_enabled':!is_edit_from_any() && hasAvailableFromRooms(),
+                      'button_behavior':!is_edit_from_any() && hasAvailableFromRooms()}"
+            >
+            Add new upgrade
+          </button>
+        </div>
       </div>
       <!--div class="d-flex flex-row justify-content-start table_header">
         <div class="c0"></div>
@@ -83,11 +108,13 @@
           <col class="c7_col">
           <col class="c8_col">
           <col class="c9_col">
+          <col class="c10_col">
         </colgroup>
         <thead>
           <tr>
             <th class=""></th>
             <th class=""><button class="add_button invisible">Add</button></th>
+            <th class=""></th>
             <th class=""><div class="h2_l0">Room</div><div class="h2_l1">Type</div></th>
             <th class=""><div class="h3_l0">Upgrade</div><div class="h3_l1">Type</div></th>
             <th class=""><div class="h4_l0">Amount</div></th>
@@ -101,20 +128,54 @@
         <tbody *ngFor="let from of upgrade_array[property_index].from; let i=index">
           <tr>
             <td class="text-center button_behavior"
-              (click)="is_open_from_room_array[i]=!is_open_from_room_array[i];">
-              {{is_open_from_room_array[i]?'&#x25B2;':'&#x25BC;'}}
+              (click)="upgrade_array[property_index].from[i].expanded=!upgrade_array[property_index].from[i].expanded;">
+              {{upgrade_array[property_index].from[i].expanded?'&#x25B2;':'&#x25BC;'}}
             </td>
-            <td class="text-center"><button class="add_button">Add</button></td>
-            <td class="room_type_cell" colspan='4'>{{from.from_room}}</td>
+            <td class="text-center">
+              <span class="add_button_box"
+                      [ngbTooltip]="add_button_tooltip"
+                      placement="top"
+                      [disableTooltip]="!upgrade_array[property_index].from[i].edit_child && hasAvailableToRooms(i)"
+                >
+                <ng-template #add_button_tooltip>
+                  {{upgrade_array[property_index].from[i].edit_child?
+                    'You must save first.':'No remaining unused room types'}}
+                </ng-template>
+                <button (click)="addUpgrade(i)"
+                  [disabled]="upgrade_array[property_index].from[i].edit_child || !hasAvailableToRooms(i)"
+                  [ngClass]="{'add_button':true,
+                              'color_disabled':upgrade_array[property_index].from[i].edit_child || !hasAvailableToRooms(i),
+                              'color_enabled':!upgrade_array[property_index].from[i].edit_child && hasAvailableToRooms(i),
+                              'button_behavior':!upgrade_array[property_index].from[i].edit_child && hasAvailableToRooms(i)}">
+                  Add
+                </button>
+              </span>
+            </td>
+            <td class="text-center" (click)="deleteFromUpgrade(i)">
+              <i class="far fa-trash-alt room_trash_button button_behavior" (click)="deleteFromUpgrade(i)"
+                [ngClass]="{'trash_button':true,'button_behavior':true,'far':true,
+                          'fa-trash-alt':!upgrade_array[property_index].from[i].new,
+                          'fa-times-circle':upgrade_array[property_index].from[i].new}">
+              </i>
+            </td>
+            <!--td *ngIf="false & !upgrade_array[property_index].from[i].edit" class="room_type_cell" colspan='4'>{{from.from_room}}</td-->
+            <td class="" colspan='4'>
+              <ng-select #selRoom [items]="upgrade_array[property_index].available_rooms"
+                  [clearable]='false' class='custom_room' [searchable]='false' (change)="changeFromRoomSelect(i)"
+                  [disabled]='!upgrade_array[property_index].from[i].new' [(ngModel)]="from.from_room">
+              </ng-select>
+            </td>
             <!--div class="c3">Upgrade Type</div>
             <div class="c4">Amount</div>
             <div class="c5">%</div-->
             <td class="align-middle"><div class="toggle_big"><app-toggle [(checked)]="from.enabled"></app-toggle></div></td>
             <td class=""><button class="edit_button invisible">Edit</button></td>
-            <td class="text-center"><button class="delete_button" (click)="deleteFromUpgrade(i)">Delete</button></td>
+            <td class="text-center"><!--button class="delete_button" (click)="deleteFromUpgrade(i)">Delete</button--></td>
             <td class=""></td>
           </tr>
-          <tr *ngFor="let to of (is_open_from_room_array[i]?from.to:[]); let j=index" class="upgrade_row">
+          <tr *ngFor="let to of (upgrade_array[property_index].from[i].expanded?from.to:[]); let j=index"
+            class="upgrade_row">
+            <td class=""></td>
             <td class=""></td>
             <td class=""></td>
             <td class=""></td>
@@ -123,18 +184,25 @@
               <!--app-restricted-text-input #room_name
                 [regex]="'^.*$'" [init_value]="to.to_room" [disabled]="!is_edit_to_room_array[i][j]">
               </app-restricted-text-input-->
-              <ng-select [items]="room_types" [clearable]='false' class='custom'
-                  #sel  [searchable]='false'   [isOpen]='false'  [ngModel]="to.to_room">
-              </ng-select>
+              <ng-select #sel [items]="upgrade_array[property_index].from[i].available_rooms" [clearable]='false' class='custom' [searchable]='false'
+                  [(ngModel)]="upgrade_array[property_index].from[i].to[j].to_room_temp"
+                  [disabled]='upgrade_array[property_index].from[i].to[j].edit||upgrade_array[property_index].from[i].to[j].new?false:true'>
+              </ng-select><!-- [isOpen]="upgrade_array[property_index].from[i].to[j].edit?true:false" -->
             </td>
-            <td [ngClass]="{'upgrade_number_field_bcgr_transp': !is_edit_to_room_array[i][j], 'upgrade_number_field_bcgr_gray': is_edit_to_room_array[i][j], 'upgrade_number_field':true}">
+            <td [ngClass]="{'upgrade_number_field_bcgr_transp': !upgrade_array[property_index].from[i].to[j].edit && !upgrade_array[property_index].from[i].to[j].new,
+                            'upgrade_number_field_bcgr_gray': upgrade_array[property_index].from[i].to[j].edit || upgrade_array[property_index].from[i].to[j].new,
+                            'upgrade_number_field':true}">
               <app-restricted-text-input #amount
-                [regex]="'^.*$'" [init_value]="to.amount" [disabled]="!is_edit_to_room_array[i][j]">
+                [regex]="'^[0-9]{0,}\\.?[0-9]{0,2}$'" [init_value]="to.amount"
+                [disabled]="!upgrade_array[property_index].from[i].to[j].edit && !upgrade_array[property_index].from[i].to[j].new">
               </app-restricted-text-input>
             </td>
-            <td [ngClass]="{'upgrade_number_field_bcgr_transp': !is_edit_to_room_array[i][j], 'upgrade_number_field_bcgr_gray': is_edit_to_room_array[i][j], 'upgrade_number_field':true}">
+            <td [ngClass]="{'upgrade_number_field_bcgr_transp': !upgrade_array[property_index].from[i].to[j].edit && !upgrade_array[property_index].from[i].to[j].new,
+                            'upgrade_number_field_bcgr_gray': upgrade_array[property_index].from[i].to[j].edit || upgrade_array[property_index].from[i].to[j].new,
+                            'upgrade_number_field':true}">
               <app-restricted-text-input #percent
-                [regex]="'^.*$'" [init_value]="to.percent" [disabled]="!is_edit_to_room_array[i][j]">
+                [regex]="'^(?:.{0}|0|[1-9][0-9]{0,1}|100)$'" [init_value]="to.percent"
+                [disabled]="!upgrade_array[property_index].from[i].to[j].edit && !upgrade_array[property_index].from[i].to[j].new">
               </app-restricted-text-input>
             </td>
 
@@ -142,11 +210,36 @@
             <td class="percent_cell">{{to.percent}}</td-->
             <td class=""></td>
             <td class="text-center">
-              <button *ngIf="!is_edit_to_room_array[i][j]" class="edit_button" (click)="is_edit_to_room_array[i][j]=true">Edit</button>
-              <button *ngIf="is_edit_to_room_array[i][j]" class="save_button"
-                (click)="saveUpgrade(i,j,'', amount.value, percent.value);showSelect(sel)">Save</button>
+              <span
+                      [ngbTooltip]="edit_button_tooltip"
+                      placement="top"
+                      [disableTooltip]="!upgrade_array[property_index].from[i].edit_child || upgrade_array[property_index].from[i].to[j].edit || upgrade_array[property_index].from[i].to[j].new"
+                >
+                <ng-template #edit_button_tooltip>
+                  {{'You must save first.'}}
+                </ng-template>
+                <button *ngIf="!upgrade_array[property_index].from[i].to[j].edit && !upgrade_array[property_index].from[i].to[j].new"
+                  class="edit_button" (click)="editUpgrade(i,j)"
+                  [disabled]="upgrade_array[property_index].from[i].edit_child"
+                  [ngClass]="{'edit_button':true,
+                              'color_disabled':upgrade_array[property_index].from[i].edit_child,
+                              'color_enabled':!upgrade_array[property_index].from[i].edit_child,
+                              'button_behavior':!upgrade_array[property_index].from[i].edit_child}">
+                        Edit
+                </button>
+                <button *ngIf="upgrade_array[property_index].from[i].to[j].edit || upgrade_array[property_index].from[i].to[j].new"
+                  class="save_button"
+                  (click)="saveUpgrade(i,j, amount.value, percent.value)">Save</button>
+              </span>
             </td>
-            <td class="text-center"><button class="delete_button" (click)="deleteUpgrade(i,j)">Delete</button></td>
+            <td class="text-center">
+              <!--button class="delete_button" (click)="deleteUpgrade(i,j)">Delete</button-->
+              <i (click)="delete_cancel_upgrade(i,j)"
+                [ngClass]="{'trash_button':true,'button_behavior':true,'far':true,
+                            'fa-trash-alt':!upgrade_array[property_index].from[i].to[j].edit && !upgrade_array[property_index].from[i].to[j].new && !upgrade_array[property_index].from[i].new && upgrade_array[property_index].from[i].to.length>1,
+                            'fa-times-circle':(upgrade_array[property_index].from[i].to[j].new && !upgrade_array[property_index].from[i].new) || upgrade_array[property_index].from[i].to[j].edit}">
+              </i>
+            </td>
             <td class=""><div class="toggle_small"><app-toggle [(checked)]="to.enabled"></app-toggle></div></td>
           </tr>
         </tbody>

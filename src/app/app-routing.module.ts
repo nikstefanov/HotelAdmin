@@ -15,15 +15,17 @@ import {ConfirmedComponent} from "./confirmed/confirmed.component";
 */
 const routes: Routes = [
   {
-    path: 'property_config', /*component: HotelViewComponent,*/ children: [
-      {path: 'settings', component: SettingsComponent},
-      {path: 'loyalty', component: LoyaltyComponent},
-      {path: 'upgrade', component: UpgradeComponent},/*
-      {path: 'satellite', component: SatelliteViewComponent},
-      {path: 'map', component: MapViewComponent}*/
-    ]
-  },
-  {path: 'settings', component: SettingsComponent},/*
+    path: 'property_config', /*component: HotelViewComponent,*/
+      data:{breadcrumb:'Property Config', icon:'fas fa-hotel'},
+      children: [
+        {path: 'settings', component: SettingsComponent, data: {breadcrumb:'Settings'} },
+        {path: 'loyalty', component: LoyaltyComponent, data: {breadcrumb:'Loyalty'} },
+        {path: 'upgrade', component: UpgradeComponent, data: {breadcrumb:'Upgrade'} },/*
+        {path: 'satellite', component: SatelliteViewComponent},
+        {path: 'map', component: MapViewComponent}*/
+    ],
+  },/*
+  {path: 'settings', component: SettingsComponent},
   {path: 'confirmed', component: ConfirmedComponent},
   {path: 'login/:token', component: LoginComponent},
   {path: '', pathMatch: 'full', redirectTo: '/login/abcde'},

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   showUserMenu: boolean;
   showHamburgerMenu: boolean
 
-  constructor(private location: Location) {
+  constructor(private activatedRoute: ActivatedRoute, private location: Location) {
     this.userName = 'Nikolay Stefanov';
     this.userRole = 'Administrator';
     this.breadcrumb0 = null;
@@ -32,7 +33,9 @@ export class HeaderComponent implements OnInit {
     var url_parts = this.location.path().substr(1).split('/');
     if(url_parts[0]){this.setBreadcrumb0(url_parts[0]);}
     if(this.breadcrumb0 && url_parts[1]){this.setBreadcrumb1(url_parts[1]);}
-    if(this.breadcrumb0){this.setBreadcrumb0Icon();}
+    if(this.breadcrumb0){this.setBreadcrumb0Icon();}/*
+    this.activatedRoute.url
+      .subscribe(url => console.log('The URL changed to: ' + url));*/
   }
 
   toggleUserMenu(event:MouseEvent){
