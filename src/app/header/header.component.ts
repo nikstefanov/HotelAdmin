@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ActivationEnd, Event, NavigationEnd, RoutesRecognized, RouterEvent } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,27 +16,57 @@ export class HeaderComponent implements OnInit {
   breadcrumb0_icon: string;
   breadcrumb1: string;
   showUserMenu: boolean;
-  showHamburgerMenu: boolean
+  showHamburgerMenu: boolean;
+  subscription: any;
 
-  constructor(private activatedRoute: ActivatedRoute, private location: Location) {
-    this.userName = 'Nikolay Stefanov';
-    this.userRole = 'Administrator';
-    this.breadcrumb0 = null;
-    this.breadcrumb0_icon = null;
-    this.breadcrumb1 = null;
-    this.showUserMenu = false;
-    this.showHamburgerMenu = false;
-    //this.closeMenuFn = this.closeMenu;
+  constructor(private activatedRoute: ActivatedRoute,
+    private location: Location,
+    private router: Router) {
+      this.userName = 'Nikolay Stefanov';
+      this.userRole = 'Administrator';
+      this.breadcrumb0 = null;
+      this.breadcrumb0_icon = null;
+      this.breadcrumb1 = null;
+      this.showUserMenu = false;
+      this.showHamburgerMenu = false;
+      //this.closeMenuFn = this.closeMenu;
   }
 
-  ngOnInit() {
+  ngOnInit() {/*
     console.log(this.location.path());
     var url_parts = this.location.path().substr(1).split('/');
     if(url_parts[0]){this.setBreadcrumb0(url_parts[0]);}
     if(this.breadcrumb0 && url_parts[1]){this.setBreadcrumb1(url_parts[1]);}
-    if(this.breadcrumb0){this.setBreadcrumb0Icon();}/*
-    this.activatedRoute.url
-      .subscribe(url => console.log('The URL changed to: ' + url));*/
+    if(this.breadcrumb0){this.setBreadcrumb0Icon();}*/
+
+    /*https://stackoverflow.com/a/45737376/10069950*/
+    let _this = this;
+    this.subscription = this.router.events.subscribe((event) =>
+      {_this.getRouteData(_this, event);}
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  getRouteData(_this: HeaderComponent, event:Event){
+    if (event instanceof RoutesRecognized) {
+      //console.log("Data: " +  JSON.stringify(event.state.root.firstChild.data) );
+      //console.log(event);
+      //console.log("bread0: " + event.state.root.children[0].data.breadcrumb);
+      //console.log("bread1: " + event.state.root.children[0].children[0].data.breadcrumb);
+      if(event.state.root.children[0] && event.state.root.children[0].data){
+        _this.breadcrumb0 = event.state.root.children[0].data.breadcrumb;
+      } else { _this.breadcrumb0 = null;}
+      if(event.state.root.children[0] && event.state.root.children[0].data){
+        _this.breadcrumb0_icon = event.state.root.children[0].data.icon;
+      } else { _this.breadcrumb0_icon = null;}
+      if(event.state.root.children[0] && event.state.root.children[0].children[0] &&
+        event.state.root.children[0].children[0].data){
+        _this.breadcrumb1 = event.state.root.children[0].children[0].data.breadcrumb;
+      } else { _this.breadcrumb1 = null;}
+    }
   }
 
   toggleUserMenu(event:MouseEvent){
@@ -72,7 +103,7 @@ export class HeaderComponent implements OnInit {
   get clickHamburgerMenuFn(){
     return this.clickHamburgerMenu.bind(this);
   }
-
+/*
   setBreadcrumb0(url_part:string){
     switch(url_part) {
       case "property_config": {
@@ -129,5 +160,5 @@ export class HeaderComponent implements OnInit {
           break;
        }
     }
-  }
+  }*/
 }

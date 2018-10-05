@@ -1,0 +1,54 @@
+<div class="background d-flex flex-column pink_tooltip">
+
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="d-flex flex-row justify-content-center align-items-center property">
+      <div class="property_label">Property :
+      </div>
+      <select #property_select
+        (change)="onPropertyChange(property_select.selectedIndex)"
+        [disabled]="false"
+        [ngClass]="{'property-select':true}"
+        >
+       <!--option value="ALTH">ALTH</option>
+       <option value="H1551">H1551</option>
+       <option value="regular">regular</option-->
+       <option *ngFor="let prop_data of rooms_data"
+       value={{prop_data.property}}>{{prop_data.property}}</option>
+     </select>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-column main_panel">
+      <div class="main_panel_header">
+        Requested Rooms
+      </div>
+      <div class="add_new_button_row">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th><span>Reservation Number</span></th>
+            <th><span>Reservation Date/Time</span></th>
+            <th><span>Arrival Date</span></th>
+            <th><span>LOS</span></th>
+            <th><span>Selected Room</span></th>
+            <th><span>Assigned Room</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of rooms_data[property_index].rooms"
+              [ngClass]="{'red_font':room.ass_room, 'green_font':!room.ass_room}"
+          >
+            <td>{{room.number}}</td>
+            <td>{{room.date}}</td>
+            <td>{{room.arr_date}}</td>
+            <td>{{room.los}}</td>
+            <td>{{room.sel_room}}</td>
+            <td>{{room.ass_room}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

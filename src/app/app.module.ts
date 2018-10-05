@@ -18,6 +18,7 @@ import { RestrictedTextInputComponent } from './component/restricted-text-input/
 import { UpgradeComponent } from './property_config/upgrade/upgrade.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { RequestedRoomsComponent } from './reports/requested-rooms/requested-rooms.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { FormsModule } from '@angular/forms';
     MultiSelectTableComponent,
     DiscountInputFieldComponent,
     RestrictedTextInputComponent,
-    UpgradeComponent
+    UpgradeComponent,
+    RequestedRoomsComponent
   ],
   imports: [
     AppRoutingModule,

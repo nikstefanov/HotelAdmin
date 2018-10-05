@@ -16,7 +16,7 @@ export class UpgradeComponent implements OnInit {
   temp_to_room_array:string[][] = [];
   room_types:string[] = ['KING','DDBL','CORN','GOVE','FOUR','AWAY','CLBK-NO','ADKS','KING-NO','PRES'];
   selectedItems:string = 'bbbb';
-  upgrade_array: object[] = [
+  upgrade_array: any = [
       {
         property:'ALGTH',
         from:[
@@ -174,7 +174,7 @@ export class UpgradeComponent implements OnInit {
   ngOnInit() {
   }
 
-  onPropertyChange(selected_index: number){
+  onPropertyChange(selected_index: number):void{
     //console.log(event);
     this.property_index = selected_index;
     //this.init_from_room_array();
@@ -205,7 +205,7 @@ export class UpgradeComponent implements OnInit {
     }
   }*/
 
-  deleteFromUpgrade(from_index:number) {
+  deleteFromUpgrade(from_index:number):void {
     this.upgrade_array[this.property_index].from =
     this.upgrade_array[this.property_index].from.filter(
       (element, index)=>index!=from_index
@@ -214,7 +214,7 @@ export class UpgradeComponent implements OnInit {
       this.getAvailableFromRooms2(this.property_index);
   }
 
-  saveUpgrade(from_room:number, to_room:number, amount:string, percent:string){
+  saveUpgrade(from_room:number, to_room:number, amount:string, percent:string):void{
     //console.log(name);//console.log(amount);console.log(percent);
     this.upgrade_array[this.property_index].from[from_room].to[to_room].to_room =
       this.upgrade_array[this.property_index].from[from_room].to[to_room].to_room_temp;
@@ -233,15 +233,15 @@ export class UpgradeComponent implements OnInit {
       this.getAvailableToRooms2(this.property_index,from_room);
   }
 
-  showSelect(sel:any){
+  showSelect(sel:any):void{
     console.log(sel);
   }
 
-  onChange(){
+  onChange():void{
     console.log(this.selectedItems);
   }
 
-  init_edit_property(){
+  init_edit_property():void{
     var number_of_from_rooms:number;
     var len:number = this.upgrade_array[this.property_index].from.length;
     for (number_of_from_rooms = 0; number_of_from_rooms < len; number_of_from_rooms++) {
@@ -257,7 +257,7 @@ export class UpgradeComponent implements OnInit {
     }
   }
 
-  init_expanded_property(){
+  init_expanded_property():void{
     var num:number;
     //console.log(this.upgrade_array[this.property_index]);
     var len:number = this.upgrade_array[this.property_index].from.length;
@@ -268,7 +268,7 @@ export class UpgradeComponent implements OnInit {
     }
   }
 
-  addUpgrade(number_of_from_rooms:number){
+  addUpgrade(number_of_from_rooms:number):void{
     var obj={
       to_room: this.upgrade_array[this.property_index].from[number_of_from_rooms].available_rooms[0],
       to_room_temp: this.upgrade_array[this.property_index].from[number_of_from_rooms].available_rooms[0],
@@ -284,12 +284,12 @@ export class UpgradeComponent implements OnInit {
     //this.temp_to_room_array[number_of_from_rooms][new_len-1] = this.getAvailableToRooms(number_of_from_rooms)[0];
   }
 
-  editUpgrade(number_of_from_rooms:number, number_of_to_rooms: number){
+  editUpgrade(number_of_from_rooms:number, number_of_to_rooms: number):void{
     this.upgrade_array[this.property_index].from[number_of_from_rooms].to[number_of_to_rooms].edit=true;
     this.upgrade_array[this.property_index].from[number_of_from_rooms].edit_child = true;
   }
 
-  addRoom(){
+  addRoom():void{
     var new_len = this.upgrade_array[this.property_index].from.push({
       from_room:this.upgrade_array[this.property_index].available_rooms[0],
       to:[],
@@ -368,7 +368,7 @@ export class UpgradeComponent implements OnInit {
     return this.room_types.filter(item => unavailable_from_rooms.indexOf(item) < 0)
   }
 
-  delete_cancel_upgrade(from_index:number, to_index:number){
+  delete_cancel_upgrade(from_index:number, to_index:number):void{
     /*if(!this.upgrade_array[this.property_index].from[from_index].to[to_index].edit &&
         !this.upgrade_array[this.property_index].from[from_index].to[to_index].new &&
         !this.upgrade_array[this.property_index].from[from_index].new && to_index>=1){
@@ -386,7 +386,7 @@ export class UpgradeComponent implements OnInit {
         }
   }
 
-  deleteUpgrade(from_index:number, to_index:number) {
+  deleteUpgrade(from_index:number, to_index:number):void {
     if(this.upgrade_array[this.property_index].from[from_index].to[to_index].edit ||
        this.upgrade_array[this.property_index].from[from_index].to[to_index].new)
         this.upgrade_array[this.property_index].from[from_index].edit_child = false;
@@ -398,7 +398,7 @@ export class UpgradeComponent implements OnInit {
       this.getAvailableToRooms2(this.property_index,from_index);
   }
 
-  cancelUpgrade(from_index:number, to_index:number){
+  cancelUpgrade(from_index:number, to_index:number):void{
     this.upgrade_array[this.property_index].from[from_index].to[to_index].edit = false;
     this.upgrade_array[this.property_index].from[from_index].edit_child = false;
     this.upgrade_array[this.property_index].from[from_index].to[to_index].to_room_temp =
@@ -419,6 +419,7 @@ export class UpgradeComponent implements OnInit {
     }
 
     //return this.room_types.filter(item => unavailable_to_rooms.indexOf(item) < 0);
+    return [];
   }
 
   hasAvailableToRooms(from_index:number):boolean{
@@ -440,7 +441,7 @@ export class UpgradeComponent implements OnInit {
     return this.room_types.filter(item => unavailable_to_rooms.indexOf(item) < 0);
   }
 
-  init_to_temp_room(){
+  init_to_temp_room():void{
     this.temp_to_room_array = [];
     var number_of_from_rooms:number;
     var len:number = this.upgrade_array[this.property_index].from.length;//console.log('len'+len);
@@ -459,7 +460,7 @@ export class UpgradeComponent implements OnInit {
     }
   }
 
-  init_to_temp_room2(){
+  init_to_temp_room2():void{
     var prop_number:number;
     var prop_len:number = this.upgrade_array.length;
     for(prop_number = 0; prop_number < prop_len; prop_number++){
@@ -481,7 +482,7 @@ export class UpgradeComponent implements OnInit {
       }
     }
   }
-  init_available_rooms(){
+  init_available_rooms():void{
     //console.log("init_available_rooms");
     /*
     for (var property_data in this.upgrade_array) {
@@ -509,7 +510,7 @@ export class UpgradeComponent implements OnInit {
     //console.log(this.upgrade_array);
   }
 
-  changeFromRoomSelect(from_index:number){
+  changeFromRoomSelect(from_index:number):void{
     this.upgrade_array[this.property_index].from[from_index].available_rooms = //this.room_types;
       this.getAvailableToRooms2(this.property_index,from_index);
     this.upgrade_array[this.property_index].from[from_index].to[0].to_room =

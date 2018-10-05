@@ -19,7 +19,7 @@
       [ngClass]="{'fa-angle-down':showSubMenu[1],'fa-angle-up':!showSubMenu[1]}">
     </span>
     <div *ngIf="showSubMenu[1]" class="sub_menu" (click)="clickHamburgerMenu($event)">
-      <div>Reports Menu Item 1</div>
+      <div [routerLink]="['/reports/requested_rooms']">Requested Rooms</div>
       <div>Reports Menu Item 2</div>
     </div>
   </div>
@@ -32,9 +32,9 @@
     </span>
     <div *ngIf="showSubMenu[2]" class="sub_menu" (click)="clickHamburgerMenu($event)">
       <div>Pictures</div>
-      <div routerLink="/property_config/settings">Settings</div>
-      <div routerLink="/property_config/loyalty">Loyality Settings</div>
-      <div routerLink="/property_config/upgrade">Upgrade Settings</div>
+      <div [routerLink]="['/property_config/settings']">Settings</div>
+      <div [routerLink]="['/property_config/loyalty']">Loyality Settings</div>
+      <div [routerLink]="['/property_config/upgrade']">Upgrade Settings</div>
       <div>Rooms Import</div>
       <div>Blackout Rooms</div>
     </div>
