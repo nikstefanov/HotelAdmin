@@ -5,6 +5,7 @@ import {SettingsComponent} from './property_config/settings/settings.component';
 import {LoyaltyComponent} from './property_config/loyalty/loyalty.component';
 import {UpgradeComponent} from './property_config/upgrade/upgrade.component';
 import {RequestedRoomsComponent} from './reports/requested-rooms/requested-rooms.component';
+import {GuestJourneyComponent} from './reports/guest-journey/guest-journey.component';
 /*
 import {HotelViewComponent} from "./hotel-view/hotel-view.component";
 import {SatelliteViewComponent} from "./satellite-view/satellite-view.component";
@@ -30,6 +31,7 @@ const routes: Routes = [
    data: {breadcrumb:'Reports', icon:'far fa-newspaper'},
    children: [
      {path: 'requested_rooms', component: RequestedRoomsComponent, data: {breadcrumb:'Requested Rooms'} },
+     {path: 'guest_journey', component: GuestJourneyComponent, data: {breadcrumb:'Guest Journey'} },
    ],
   },/*
   {path: 'confirmed', component: ConfirmedComponent},

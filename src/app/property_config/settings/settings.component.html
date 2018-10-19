@@ -23,6 +23,13 @@
     <div class="col-12 col-md-6 col-lg-4">
       <div class="panel">
         <div class="panel-header">
+          Sent from email address
+        </div>
+        <input type="text" class="sent_from_email_addr_style" placeholder="MyRoom@domain.com"/>
+        <button type="button" class="email_save_btn">Save</button>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
           Booking Source
         </div>
         <table class="text-right panel-table">
@@ -78,8 +85,12 @@
             placement="top"
             ngbTooltip="Use ';' to separate each domain"></i>
         </div>
-        <textarea  class="textarea_style"></textarea>
-        <button type="button" class="email_save_btn">Save</button>
+        <!--textarea  class="textarea_style"></textarea-->
+        <!--button type="button" class="email_save_btn">Save</button-->
+        <app-multi-select-table [showDeleteButton]="true" [showSaveButton]="true"
+          class="restrict_email" [onSaveFunction]="onSave"
+          [options]="['nikstefanov@hotmail.com','nstefanov@koridor.com','sciant.com']">
+        </app-multi-select-table>
       </div>
       <div class="line-panel-container">
         <div class="line-panel">
@@ -136,6 +147,20 @@
             <td class="max-room-sel-text">days from arrival</td>
           </tr>
         </table>
+        <button type="button" class="email_save_btn">Save</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          Invitation delay setting
+        </div>
+        <span class="max-room-sel-text">
+          Invitation delay (minutes)
+        </span>
+        <!--input type="number" min="0" step="1" class="text-center max-room num-field no-spin"-->
+        <app-restricted-text-input class="invitation_delay"
+          [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [init_value]="''">
+        </app-restricted-text-input>
         <button type="button" class="email_save_btn">Save</button>
       </div>
       <!-- Next code moved to app-blackout-dates-table component.-->

@@ -1,6 +1,6 @@
 .select_container{
   margin-left: 14px;
-  padding-bottom: 35px;
+  /*padding-bottom: 35px;*/
   width:260px;
 }
 .options_table_container{
@@ -9,7 +9,7 @@
   width:260px;
   height: 100px;
   border: 1px solid #cfcfcf;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
 }
 .selected_table_row{
   background-color: #5e9dbc;
@@ -28,16 +28,6 @@
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-}
-.new_btn{
-   border: 1px solid #e0e0e0;
-   color: white;
-   background-color: #4eb47f;
-   border-radius: 6px;
-   font-size: 14px;
-   width: 60px;
-   float: right;
-   display:block;
 }
 .new_option_field{
   border: 0px none;
@@ -58,4 +48,56 @@
 }
  :host ::ng-deep .bs-tooltip-bottom .arrow::before {
     border-bottom-color: #c896d2;
+}
+.flex-container-7{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 0px 0px 0px 0px;/*top right bottom left*/
+  height: 46px;
+  align-items: center;
+}
+
+.delete_btn{
+   border: 1px solid #e0e0e0;
+   color: white;
+   background-color: #8f2a41;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 60px;
+   /*float: right;*/
+   display:block;
+   margin: 0px 0px 0px 16px;/*top right bottom left*/
+   height: 25px;
+}
+.new_btn{
+   border: 1px solid #e0e0e0;
+   color: white;
+   background-color: #4eb47f;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 60px;
+   /*float: right;*/
+   display:block;
+   height:25px;
+}
+
+.save_btn{
+   border: 1px solid #e0e0e0;
+   color: white;
+   background-color: #5e9dbc;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 60px;
+   /*float: right;*/
+   display:block;
+   height:25px;
+   margin: 0px 0px 0px 16px;/*top right bottom left*/
+}
+.button_behavior{
+  cursor:pointer;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
 }

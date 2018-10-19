@@ -85,4 +85,8 @@ export class SettingsComponent {
   isFrom = date => equals(date, this.fromDate);
   isTo = date => equals(date, this.toDate);
 */
+
+  public onSave(){
+    console.log('onSave');
+  }
 }

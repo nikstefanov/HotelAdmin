@@ -38,7 +38,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let room of rooms_data[property_index].rooms"
-              [ngClass]="{'red_font':room.ass_room, 'green_font':!room.ass_room}"
+              [ngClass]="{'red_font':!room.ass_room, 'green_font':room.ass_room}"
           >
             <td>{{room.number}}</td>
             <td>{{room.date}}</td>

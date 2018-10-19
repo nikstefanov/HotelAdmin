@@ -20,7 +20,14 @@
       </tr>
     </table>
   </div>
-  <button type="button" class="new_btn" (click)="showNewOptionField(true)">New</button>
+  <div class="flex-container-7">
+    <button type="button" class="new_btn button_behavior"
+      (click)="showNewOptionField(true)">New</button>
+    <button *ngIf="showDeleteButton" type="button"
+      class="delete_btn button_behavior" (click)="onDeleteButton()">Delete</button>
+    <button *ngIf="showSaveButton" type="button"
+        class="save_btn button_behavior" (click)="onSaveFunction()">Save</button>
+  </div>
 </div>
 <ng-template #newOptionTooltip>
   <div class="newOptionTooltip">

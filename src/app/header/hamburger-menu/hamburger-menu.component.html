@@ -20,7 +20,7 @@
     </span>
     <div *ngIf="showSubMenu[1]" class="sub_menu" (click)="clickHamburgerMenu($event)">
       <div [routerLink]="['/reports/requested_rooms']">Requested Rooms</div>
-      <div>Reports Menu Item 2</div>
+      <div [routerLink]="['/reports/guest_journey']">Guest Journey</div>
     </div>
   </div>
   <div (click)="toggleSubMenu($event,2)">

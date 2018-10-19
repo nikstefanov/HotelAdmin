@@ -1,0 +1,85 @@
+<div class="background d-flex flex-column pink_tooltip">
+
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="d-flex flex-row justify-content-center align-items-center property">
+      <div class="property_label">Property :
+      </div>
+      <select #property_select
+        (change)="onPropertyChange(property_select.selectedIndex)"
+        [disabled]="false"
+        [ngClass]="{'property-select':true}"
+        >
+       <!--option value="ALTH">ALTH</option>
+       <option value="H1551">H1551</option>
+       <option value="regular">regular</option-->
+       <option *ngFor="let prop_data of guest_journey_data"
+       value={{prop_data.property}}>{{prop_data.property}}</option>
+     </select>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-column main_panel">
+      <div class="main_panel_header">
+        Guest Journey
+      </div>
+      <div class="add_new_button_row">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let column_header of column_headers; let col=index">
+              <div class="flex-container-8">
+                {{column_header[0]}}<br/>{{column_header[1]}}
+                <app-sorting-buttons (direction_emitter)="onSortArrow(col,$event)"
+                  [ngClass]="{'sort_active_asc':col==sorted_index && sorted_asc,
+                              'sort_active_desc':col==sorted_index && !sorted_asc}">
+                </app-sorting-buttons>
+              </div>
+            </th>
+            <!--th><span>Reservation<br/>Made</span></th>
+            <th><span>Welcome<br/>Email Sent</span></th>
+            <th><span>Email<br/>Read</span></th>
+            <th><span>Click Through<br/>Date</span></th>
+            <th><span>Selection<br/>Made</span></th>
+            <th><span>Selected<br/>Room</span></th>
+            <th><span>Confirm.<br/>Email Sent</span></th>
+            <th><span>Email<br/>Read</span></th>
+            <th><span>Upsell<br/>Price</span></th>
+            <th class="flex-container-8">
+              <span>Check<br/>in</span>
+              <app-sorting-buttons></app-sorting-buttons>
+            </th>
+            <th><span>Check<br/>out</span></th>
+            <th><span>Assigned<br/>Room</span></th>
+            <th><span>Room<br/>Revenue</span></th>
+            <th><span>Cancelled</span></th-->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let journey of guest_journey_data[property_index].journeys"
+              [ngClass]="{}"
+          >
+            <td>{{journey.number}}</td>
+            <td>{{journey.reservation_date}}</td>
+            <td>{{journey.welcome_email_sent_date}}</td>
+            <td>{{journey.welcome_email_read_date}}</td>
+            <td>{{journey.click_trough_date}}</td>
+            <td>{{journey.selection_date}}</td>
+            <td>{{journey.selected_room}}</td>
+            <td>{{journey.confirmation_email_sent_date}}</td>
+            <td>{{journey.confirmation_email_read_date}}</td>
+            <td>{{journey.upsell_price}}</td>
+            <td>{{journey.check_in_date}}</td>
+            <td>{{journey.check_out_date}}</td>
+            <td [ngClass]="{'red_font':journey.ass_room != journey.selected_room,
+                            'green_font':journey.ass_room == journey.selected_room}">
+                {{journey.ass_room}}</td>
+            <td>{{journey.room_revenue}}</td>
+            <td>{{journey.canceled_date}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

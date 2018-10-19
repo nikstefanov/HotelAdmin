@@ -65,8 +65,8 @@
 .main_panel{
   background-color: white;
   /*border-radius: 4px;*/
-  flex-basis: 1142px;
-  max-width: 1142px;
+  flex-basis: 1800px;
+  max-width: 1800px;
   padding-bottom: 21px;
   margin-bottom: 86px;
   /*border-bottom-left-radius: 6px;
@@ -90,13 +90,14 @@
   padding: 22px 0px 0px 18px;/*top right bottom left*/
 }
 table{
-  width: 100%;
+  width:100%;
 }
 table>thead>tr>th{
-  height: 49px;
+  height: 75px;
   background-color: #636363;
   color:white;
-  text-align: center;
+  text-align: left/*center*/;
+  font-size:16px;
 }
 table>tbody>tr>td{
   font-size:14px;
@@ -115,3 +116,22 @@ table>tbody>tr:nth-child(1){
 }
 .red_font{color:red;}
 .green_font{color:green;}
+
+.flex-container-8{
+  display: flex;
+  flex-direction: row;
+  /*justify-content: center;/*/
+  justify-content: flex-start;
+  align-items: center;
+}
+table>thead>tr>th/*.flex-container-8*/ ::ng-deep .arrows{
+  font-size: 12px;
+  color: white;
+  margin: 0px 7px 0px 8px;/*top right bottom left*/
+}
+.sort_active_asc ::ng-deep .arrows .up_arrow{
+  color: red;
+}
+.sort_active_desc ::ng-deep .arrows .down_arrow{
+  color: red;
+}

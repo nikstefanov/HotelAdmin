@@ -1,2 +1,9 @@
-<input #input type="text" class="restricted-text-input_style"
-   (input)="onInput($event)" [disabled]="disabled"/>
+<input type="text" class="restricted-text-input_style"
+    [value]="value" appRegexMask [regex]="regex" [disabled]="disabled">
+
+<!--input type="text" class="restricted-text-input_style"
+  [(ngModel)]="value" (ngModelChange)="onChange($event)"
+  [disabled]="disabled"-->
+
+  <!--input #input type="text" class="restricted-text-input_style" [disabled]="disabled"
+    [value]="value" (input)="onInput2($event)"/-->

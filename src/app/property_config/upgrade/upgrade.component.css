@@ -1,6 +1,7 @@
 .background{
   background: url(/assets/bckgr3.png);
   background-repeat: repeat;
+  min-height:calc(100vh - 78px);/*header height is 78px*/
 }
 .property-panel{
   background-color: #ffffff;

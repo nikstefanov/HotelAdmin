@@ -4,7 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
-import {AppRoutingModule} from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { UserMenuComponent } from './header/user-menu/user-menu.component';
 import { HamburgerMenuComponent } from './header/hamburger-menu/hamburger-menu.component';
@@ -17,8 +17,11 @@ import { DiscountInputFieldComponent } from './component/discount-input-field/di
 import { RestrictedTextInputComponent } from './component/restricted-text-input/restricted-text-input.component';
 import { UpgradeComponent } from './property_config/upgrade/upgrade.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestedRoomsComponent } from './reports/requested-rooms/requested-rooms.component';
+import { GuestJourneyComponent } from './reports/guest-journey/guest-journey.component';
+import { SortingButtonsComponent } from './component/sorting-buttons/sorting-buttons.component';
+import { RegexMaskDirective } from './directive/regex-mask.directive';
 
 
 @NgModule({
@@ -35,14 +38,21 @@ import { RequestedRoomsComponent } from './reports/requested-rooms/requested-roo
     DiscountInputFieldComponent,
     RestrictedTextInputComponent,
     UpgradeComponent,
-    RequestedRoomsComponent
+    RequestedRoomsComponent,
+    GuestJourneyComponent,
+    SortingButtonsComponent,
+    RegexMaskDirective
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     NgSelectModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule.forRoot()
+  ],
+  exports:[
+    RegexMaskDirective,
   ],
   providers: [],
   bootstrap: [AppComponent]

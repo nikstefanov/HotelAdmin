@@ -1,3 +1,4 @@
+
 <div class="background d-flex flex-column">
   <!--ul class="nav flex-column">
     <li class="nav-item">
@@ -29,11 +30,12 @@
       <div class="property_label">Property :
       </div>
       <div class="">
-        <select class="property-select">
-         <option value="ALTH">ALTH</option>
-         <option value="H1551">H1551</option>
-         <option value="regular">regular</option>
-       </select>
+       <select #property_select class="property-select"
+          (change)="onPropertyChange(property_select.selectedIndex)">
+          <option *ngFor="let loyalty_data of data"
+            value={{loyalty_data.property}}>{{loyalty_data.property}}
+          </option>
+      </select>
       </div>
     </div>
   </div>
@@ -79,7 +81,8 @@
             </div>
             <!--div class="multi_choice">
             </div-->
-            <app-multi-select-table [options]="['Ala','Bala','Nica','Marsilia','Zaro']">
+            <app-multi-select-table [showDeleteButton]="false" [showSaveButton]="false"
+              [options]="data[property_index].loyalty_members_data.tier_level.all">
             </app-multi-select-table>
           </div>
           <div class="row0_table_container">
@@ -88,9 +91,16 @@
                   <td>Room selection fee</td>
                   <td  class="selection_fee_field">
                     <!-- https://stackoverflow.com/questions/6029674/regex-for-positive-float-numbers -->
-                    <app-restricted-text-input
-                      [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [init_value]="''" [disabled]="false">
-                    </app-restricted-text-input>
+                    <!--app-restricted-text-input
+                      [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [value]="" [disabled]="false">
+                    </app-restricted-text-input-->{{dummy_var}}
+                    <input type="text" class="restricted-text-input_style"
+                        appRegexMask [(ngModel)]="dummy_var" [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [disabled]="false"/>
+                        {{form.controls.room_selection_fee.value}}
+                        <!-- <form [formGroup]="form">
+                          <input formControlName="room_selection_fee" (ngModelChange)="test(room_selection_fee)"
+                            appRegexMask [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" /> -->
+                        <!-- </form> -->
                   </td>
                 </tr>
                 <tr>
@@ -133,7 +143,7 @@
                 <td rowspan="2"
                   [ngClass]="{'days_left_text':invitation_email, 'days_left_text_inactive':!invitation_email}">
                   <app-restricted-text-input
-                    [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [init_value]="''" [disabled]="!invitation_email">
+                    [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [value]="''" [disabled]="!invitation_email">
                   </app-restricted-text-input>
                   days left
                 </td>
@@ -145,9 +155,22 @@
           </div>
         </div-->
 
+        <div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="toggle">
+            <app-toggle [(checked)]="loyalty_members?data[property_index].loyalty_members_data.allow_room_selection:data[property_index].non_loyalty_members_data.allow_room_selection">
+            </app-toggle>
+          </div>
+          <div [ngClass]="{'tab_row_text':loyalty_members?data[property_index].loyalty_members_data.allow_room_selection:data[property_index].non_loyalty_members_data.allow_room_selection,
+                           'tab_row_text_inactive':loyalty_members?!data[property_index].loyalty_members_data.allow_room_selection:!data[property_index].non_loyalty_members_data.allow_room_selection}">
+            Allow room selection
+          </div>
+        </div>
 
         <div class="d-flex flex-wrap justify-content-start tab_row">
-          <div class="toggle"><app-toggle [(checked)]="invitation_email"></app-toggle></div>
+          <div class="toggle">
+            <app-toggle [(checked)]="loyalty_members?data[property_index].loyalty_members_data.send_invitation_email:data[property_index].non_loyalty_members_data.send_invitation_email">
+            </app-toggle>
+          </div>
           <div>
             <table class="invitation_email_table text-right">
               <tr><td [ngClass]="{'tab_row_text':invitation_email, 'tab_row_text_inactive':!invitation_email}">
@@ -171,9 +194,12 @@
             <div [ngClass]="{'days_left_text':invitation_email,
               'days_left_text_inactive':!invitation_email,
               'invitation_email_days_left_margin':true}">
-              <app-restricted-text-input
-                [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [init_value]="''" [disabled]="!invitation_email">
-              </app-restricted-text-input>
+              <!--app-restricted-text-input
+                [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [value]="''" [disabled]="!invitation_email">
+              </app-restricted-text-input-->{{dummy_var2}}
+              <input type="text" class="restricted-text-input_style"
+                          [(ngModel)]="dummy_var2"
+                  appRegexMask [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [disabled]="!invitation_email">
               days left
             </div>
           </div>
@@ -194,7 +220,7 @@
           </div>
           <div class="align-self-center">
             <app-restricted-text-input
-              [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [init_value]="''" [disabled]="!invitation_email">
+              [regex]="'^[0-9]*(?:\\.[0-9]*)?$'" [value]="''" [disabled]="!invitation_email">
             </app-restricted-text-input>
             days left
           </div>
@@ -210,17 +236,27 @@
             'days_left_text_inactive':!reminder_email,
             'reminder_email_days_left_margin':true}">
             <app-restricted-text-input
-              [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [init_value]="''" [disabled]="!reminder_email">
+              [regex]="'^(?:.{0}|0|[1-9][0-9]*)$'" [value]="''" [disabled]="!reminder_email">
             </app-restricted-text-input>
             days left
           </div>
         </div>
+
         <div class="d-flex flex-wrap justify-content-start tab_row">
-          <div class="toggle"><app-toggle [(checked)]="room_selection"></app-toggle></div>
-          <div [ngClass]="{'tab_row_text':room_selection, 'tab_row_text_inactive':!room_selection}">
-            Allow room selection
+          <div class="toggle"><app-toggle [(checked)]="confirmation_email"></app-toggle></div>
+          <div [ngClass]="{'tab_row_text':confirmation_email, 'tab_row_text_inactive':!confirmation_email}">
+            Send confirmation e-mail
           </div>
         </div>
+
+        <div class="d-flex flex-wrap justify-content-start tab_row">
+          <div class="toggle"><app-toggle [(checked)]="upgrade_confirmation_email"></app-toggle></div>
+          <div [ngClass]="{'tab_row_text':upgrade_confirmation_email,
+                          'tab_row_text_inactive':!upgrade_confirmation_email}">
+            Send upgrade confirmation e-mail
+          </div>
+        </div>
+
         <div class="d-flex justify-content-end">
           <button class="send_button">Save</button>
         </div>

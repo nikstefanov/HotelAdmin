@@ -11,9 +11,12 @@ export class MultiSelectTableComponent
   implements OnInit, AfterContentChecked, AfterContentInit  {
 
   @Input() options: String[] = [];
+  @Input() showDeleteButton: boolean = true;
+  @Input() showSaveButton: boolean = true;
+  @Input() onSaveFunction: ()=>void;
   @ViewChild('options_table_container') ot_container: ElementRef;
   @ViewChild('newOptionTooltip') tooltip: NgbTooltip;
-  private optionsMap: boolean[] = [];
+  private optionsMap: boolean[] = []; /*selected items*/
   private newOptionInput: boolean = false;
 
   constructor() {
@@ -61,4 +64,12 @@ export class MultiSelectTableComponent
     this.showNewOptionField(false);
   }
 
+  private onDeleteButton(){
+    this.options = this.options.filter((opt,index)=>!this.optionsMap[index]);
+    this.optionsMap = this.optionsMap.filter(optMap=>!optMap);
+  }
+
+  private onSaveButton(){
+    console.log('onSaveButton');
+  }
 }
