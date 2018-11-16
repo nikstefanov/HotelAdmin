@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tag="v0.7"
+tag="v0.8"
 container="my-room-admin-dev"
 registryUrl="registrydev.azurecr.io"
 registryUsername="registrydev"

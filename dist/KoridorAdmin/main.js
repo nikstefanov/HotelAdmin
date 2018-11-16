@@ -185,12 +185,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reports_requested_rooms_requested_rooms_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./reports/requested-rooms/requested-rooms.component */ "./src/app/reports/requested-rooms/requested-rooms.component.ts");
 /* harmony import */ var _reports_guest_journey_guest_journey_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./reports/guest-journey/guest-journey.component */ "./src/app/reports/guest-journey/guest-journey.component.ts");
 /* harmony import */ var _component_sorting_buttons_sorting_buttons_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./component/sorting-buttons/sorting-buttons.component */ "./src/app/component/sorting-buttons/sorting-buttons.component.ts");
+/* harmony import */ var _directive_regex_mask_directive__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./directive/regex-mask.directive */ "./src/app/directive/regex-mask.directive.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -232,14 +234,19 @@ var AppModule = /** @class */ (function () {
                 _property_config_upgrade_upgrade_component__WEBPACK_IMPORTED_MODULE_15__["UpgradeComponent"],
                 _reports_requested_rooms_requested_rooms_component__WEBPACK_IMPORTED_MODULE_18__["RequestedRoomsComponent"],
                 _reports_guest_journey_guest_journey_component__WEBPACK_IMPORTED_MODULE_19__["GuestJourneyComponent"],
-                _component_sorting_buttons_sorting_buttons_component__WEBPACK_IMPORTED_MODULE_20__["SortingButtonsComponent"]
+                _component_sorting_buttons_sorting_buttons_component__WEBPACK_IMPORTED_MODULE_20__["SortingButtonsComponent"],
+                _directive_regex_mask_directive__WEBPACK_IMPORTED_MODULE_21__["RegexMaskDirective"]
             ],
             imports: [
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_16__["NgSelectModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_17__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_17__["ReactiveFormsModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModule"].forRoot()
+            ],
+            exports: [
+                _directive_regex_mask_directive__WEBPACK_IMPORTED_MODULE_21__["RegexMaskDirective"],
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
@@ -443,7 +450,7 @@ module.exports = ".input_container{\n  width: 90px;\n  height: 46px;\n}\n.input_
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--div class=\"input_container\"-->\n  <table class=\"input_table input_container\">\n    <tr>\n      <td rowspan='2'>\n        <input type=\"text\" class=\"input_field\" (keyup)=\"onKey($event)\" (paste)=\"onPaste($event)\"/>\n      </td>\n      <td rowspan='2' class=\"discount_label\">{{percent_discount?'%':'$'}}\n      </td>\n      <td [ngClass]=\"{'active_button':percent_discount,'non_active_button':!percent_discount}\"\n        (click)=\"set_percent_discount(true)\">%\n      </td>\n    </tr>\n    <tr>\n      <td [ngClass]=\"{'active_button':!percent_discount,'non_active_button':percent_discount}\"\n        (click)=\"set_percent_discount(false)\">$\n      </td>\n    </tr>\n  </table>\n<!--/div-->\n"
+module.exports = "<!--div class=\"input_container\"-->\n  <table class=\"input_table input_container\">\n    <tr>\n      <td rowspan='2'>\n        <input type=\"text\" class=\"input_field\"\n          appRegexMask [regex]=\"regex\" [disabled]=\"false\"\n          [ngModel]=\"real_value\"\n          (update)=\"on_text_field_update($event)\"/>\n      </td>\n      <td rowspan='2' class=\"discount_label\">{{discountType?'%':'$'}}\n      </td>\n      <td [ngClass]=\"{'active_button':discountType,'non_active_button':!discountType}\"\n        (click)=\"set_discount_type(true)\">%\n      </td>\n    </tr>\n    <tr>\n      <td [ngClass]=\"{'active_button':!discountType,'non_active_button':discountType}\"\n        (click)=\"set_discount_type(false)\">$\n      </td>\n    </tr>\n  </table>\n<!--/div-->\n"
 
 /***/ }),
 
@@ -471,32 +478,51 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var DiscountInputFieldComponent = /** @class */ (function () {
     function DiscountInputFieldComponent() {
         this.percent_discount = true;
-        this.previous_value = "";
+        this.regex = '^(?:.{0}|0|[1-9][0-9]*)$';
+        this.regExObj = new RegExp(this.regex);
+        this.valueChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.discountTypeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.discountType = true;
     }
+    Object.defineProperty(DiscountInputFieldComponent.prototype, "value", {
+        set: function (value1) {
+            if (this.regExObj.test(value1)) {
+                this.real_value = value1;
+            }
+            else {
+                this.real_value = "";
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     DiscountInputFieldComponent.prototype.ngOnInit = function () {
     };
-    DiscountInputFieldComponent.prototype.set_percent_discount = function (new_val) {
-        this.percent_discount = new_val;
+    DiscountInputFieldComponent.prototype.set_discount_type = function (new_val) {
+        this.discountType = new_val;
+        this.discountTypeChange.emit(this.discountType);
     };
-    DiscountInputFieldComponent.prototype.onKey = function (event) {
-        //console.log(event);
-        var regex = /^[0-9]*$/;
-        if (!regex.test(event.target.value)) {
-            event.target.value = this.previous_value;
-        }
-        else {
-            if (event.target.value.length > 0) {
-                event.target.value = parseInt(event.target.value, 10);
-            }
-            this.previous_value = event.target.value;
-        }
+    DiscountInputFieldComponent.prototype.on_text_field_update = function (value1) {
+        this.real_value = value1;
+        this.valueChange.emit(value1);
     };
-    DiscountInputFieldComponent.prototype.onPaste = function (event) {
-        console.log(event);
-        console.log(event.target);
-        console.log(event.target.value.length);
-        console.log(event.target.type);
-    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], DiscountInputFieldComponent.prototype, "valueChange", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], DiscountInputFieldComponent.prototype, "discountTypeChange", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], DiscountInputFieldComponent.prototype, "discountType", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], DiscountInputFieldComponent.prototype, "value", null);
     DiscountInputFieldComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-discount-input-field',
@@ -564,7 +590,24 @@ var MultiSelectTableComponent = /** @class */ (function () {
         this.showSaveButton = true;
         this.optionsMap = []; /*selected items*/
         this.newOptionInput = false;
+        this.optionsChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.selectedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
+    Object.defineProperty(MultiSelectTableComponent.prototype, "selected", {
+        set: function (map) {
+            this.optionsMap = [];
+            for (var _i = 0; _i < this.options.length; _i++)
+                if (_i < map.length) {
+                    this.optionsMap.push(map[_i]);
+                }
+                else {
+                    this.optionsMap.push(false);
+                }
+            //console.log(this.optionsMap);
+        },
+        enumerable: true,
+        configurable: true
+    });
     MultiSelectTableComponent.prototype.ngOnInit = function () {
     };
     MultiSelectTableComponent.prototype.ngAfterContentInit = function () {
@@ -576,6 +619,7 @@ var MultiSelectTableComponent = /** @class */ (function () {
     };
     MultiSelectTableComponent.prototype.toggleLineSelection = function (i) {
         this.optionsMap[i] = !this.optionsMap[i];
+        this.selectedChange.emit(this.optionsMap);
     };
     MultiSelectTableComponent.prototype.newOption = function () {
         this.showNewOptionField(true);
@@ -599,6 +643,7 @@ var MultiSelectTableComponent = /** @class */ (function () {
             this.options.push(event.target.value);
             this.optionsMap.push(false);
             event.target.value = "";
+            this.optionsChange.emit(this.options);
         }
         this.showNewOptionField(false);
     };
@@ -634,6 +679,19 @@ var MultiSelectTableComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('newOptionTooltip'),
         __metadata("design:type", _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbTooltip"])
     ], MultiSelectTableComponent.prototype, "tooltip", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], MultiSelectTableComponent.prototype, "optionsChange", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array),
+        __metadata("design:paramtypes", [Array])
+    ], MultiSelectTableComponent.prototype, "selected", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], MultiSelectTableComponent.prototype, "selectedChange", void 0);
     MultiSelectTableComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-multi-select-table',
@@ -656,7 +714,7 @@ var MultiSelectTableComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<input #input type=\"text\" class=\"restricted-text-input_style\"\n   (input)=\"onInput($event)\" [disabled]=\"disabled\"/>\n"
+module.exports = "<input type=\"text\" class=\"restricted-text-input_style\"\n    [value]=\"value\" appRegexMask [regex]=\"regex\" [disabled]=\"disabled\">\n\n<!--input type=\"text\" class=\"restricted-text-input_style\"\n  [(ngModel)]=\"value\" (ngModelChange)=\"onChange($event)\"\n  [disabled]=\"disabled\"-->\n\n  <!--input #input type=\"text\" class=\"restricted-text-input_style\" [disabled]=\"disabled\"\n    [value]=\"value\" (input)=\"onInput2($event)\"/-->\n"
 
 /***/ }),
 
@@ -682,33 +740,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 var RestrictedTextInputComponent = /** @class */ (function () {
+    //private old_value:string = "";
+    //private regExObj: RegExp;
+    /*@ViewChild('input') input: ElementRef;*/
+    /*
+    * When using the constructor function, the normal string escape rules
+    * (preceding special characters with \ when included in a string) are necessary.
+    */
     function RestrictedTextInputComponent() {
         this.disabled = false;
+        this.value = "";
         this.init_value = "";
-        this.old_value = "";
     }
     RestrictedTextInputComponent.prototype.ngOnInit = function () {
-        this.old_value = this.init_value;
-        this.value = this.init_value;
-    };
-    RestrictedTextInputComponent.prototype.ngAfterViewInit = function () {
-        this.input.nativeElement.value = this.init_value;
-    };
-    Object.defineProperty(RestrictedTextInputComponent.prototype, "regex", {
-        set: function (regex) {
-            this.regExObj = new RegExp(regex);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    RestrictedTextInputComponent.prototype.onInput = function (event) {
-        if (!this.regExObj.test(event.target.value)) {
-            event.target.value = this.old_value;
+        //this.old_value = this.value;
+        if (!this.value && this.init_value) {
+            this.value = this.init_value;
         }
-        else {
-            this.old_value = event.target.value;
-        }
-        this.value = event.target.value;
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -717,16 +765,15 @@ var RestrictedTextInputComponent = /** @class */ (function () {
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
-    ], RestrictedTextInputComponent.prototype, "init_value", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('input'),
-        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
-    ], RestrictedTextInputComponent.prototype, "input", void 0);
+    ], RestrictedTextInputComponent.prototype, "value", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
-    ], RestrictedTextInputComponent.prototype, "regex", null);
+        __metadata("design:type", String)
+    ], RestrictedTextInputComponent.prototype, "init_value", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], RestrictedTextInputComponent.prototype, "regex", void 0);
     RestrictedTextInputComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-restricted-text-input',
@@ -830,7 +877,7 @@ module.exports = ".switch {\n  position: relative;\n  display: inline-block;\n}\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<label class=\"switch dimensions\">\n  <input type=\"checkbox\" [checked]=\"_checked\"\n    (change)=\"setChecked($event.target.checked)\">\n  <span class=\"slider round\"></span>\n</label>\n"
+module.exports = "<label class=\"switch dimensions\">\n  <input type=\"checkbox\" [checked]=\"_checked\" [disabled]=\"disabled\"\n    (change)=\"setChecked($event.target.checked)\">\n  <span class=\"slider round\"></span>\n</label>\n"
 
 /***/ }),
 
@@ -859,9 +906,8 @@ var ToggleComponent = /** @class */ (function () {
     function ToggleComponent() {
         this._checked = true;
         this.checkedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.disabled = false;
     }
-    ToggleComponent.prototype.ngOnInit = function () {
-    };
     Object.defineProperty(ToggleComponent.prototype, "checked", {
         get: function () { return this._checked; },
         set: function (value) {
@@ -870,6 +916,8 @@ var ToggleComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    ToggleComponent.prototype.ngOnInit = function () {
+    };
     ToggleComponent.prototype.setChecked = function (value) {
         this._checked = value;
         this.checkedChange.emit(value);
@@ -883,6 +931,10 @@ var ToggleComponent = /** @class */ (function () {
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [Boolean])
     ], ToggleComponent.prototype, "checked", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ToggleComponent.prototype, "disabled", void 0);
     ToggleComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-toggle',
@@ -894,6 +946,107 @@ var ToggleComponent = /** @class */ (function () {
     return ToggleComponent;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/directive/regex-mask.directive.ts":
+/*!***************************************************!*\
+  !*** ./src/app/directive/regex-mask.directive.ts ***!
+  \***************************************************/
+/*! exports provided: RegexMaskDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegexMaskDirective", function() { return RegexMaskDirective; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var RegexMaskDirective = /** @class */ (function () {
+    function RegexMaskDirective(//public ngControl: NgControl,
+    el) {
+        this.el = el;
+        this.old_value = "";
+        /**
+         * Output event is used to update the value in the element
+         */
+        this.update = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+    }
+    Object.defineProperty(RegexMaskDirective.prototype, "regex", {
+        set: function (regex) {
+            this.regExObj = new RegExp(regex);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RegexMaskDirective.prototype.input = function (event) {
+        this.onInputChange(event);
+    };
+    RegexMaskDirective.prototype.focus = function (event) {
+        //this.onInputChange(event);
+        this.old_value = event.target.value;
+    };
+    RegexMaskDirective.prototype.onInputChange = function (event) {
+        //console.log("Input Event");
+        if (this.regExObj.test(event.target.value)) {
+            this.old_value = event.target.value;
+            this.update.emit(event.target.value);
+        }
+        else {
+            this.el.nativeElement.value = this.old_value;
+            //console.log("new value: " + this.old_value);
+            /*let event = new InputEvent("input event created by me");
+            this.el.nativeElement.dispatchEvent(event);*/
+            this.update.emit(this.old_value);
+        }
+        //console.log('VAL: ' + this.old_value);
+        //this.valEmitter.next(this.old_value);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], RegexMaskDirective.prototype, "regex", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], RegexMaskDirective.prototype, "update", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('input', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], RegexMaskDirective.prototype, "input", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('focus', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], RegexMaskDirective.prototype, "focus", null);
+    RegexMaskDirective = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
+            selector: '[appRegexMask]'
+        }),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
+    ], RegexMaskDirective);
+    return RegexMaskDirective;
+}());
+
+/**
+ * Credits:
+ * https://stackoverflow.com/a/37887432/10069950
+ * https://stackblitz.com/edit/angular5-phone-mask-directive?file=app%2Fphone-mask.directive.ts
+ * https://stackblitz.com/edit/angular-sxj8yt?file=src%2Fapp%2Fapp.component.html
+ */
 
 
 /***/ }),
@@ -1258,7 +1411,7 @@ module.exports = " .background{\n  /*background-color: #dddddd;\n  background: r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"background d-flex flex-column\">\n  <!--ul class=\"nav flex-column\">\n    <li class=\"nav-item\">\n      <span class=\"nav-link active\" href=\"#\">Loyalty</span>\n    </li>\n    <li class=\"nav-item\">\n      <span class=\"nav-link\" href=\"#\">Not<br/>Loyalty</span>\n    </li>\n  </ul-->\n  <!--div class=\"property-panel\">\n    <table>\n      <tr>\n        <td>Property :</td>\n        <td>\n          <div class=\"\">\n            <select class=\"property-select\">\n             <option value=\"ALTH\">ALTH</option>\n             <option value=\"H1551\">H1551</option>\n             <option value=\"regular\">regular</option>\n           </select>\n          </div>\n        </td>\n      </tr>\n    </table>\n  </div-->\n\n  <div class=\"d-flex flex-row justify-content-center align-items-center\">\n    <div class=\"d-flex flex-row justify-content-center align-items-center property\">\n      <div class=\"property_label\">Property :\n      </div>\n      <div class=\"\">\n        <select class=\"property-select\">\n         <option value=\"ALTH\">ALTH</option>\n         <option value=\"H1551\">H1551</option>\n         <option value=\"regular\">regular</option>\n       </select>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"d-flex flex-row justify-content-center\">\n    <div class=\"tabs\">\n      <ul class=\"nav flex-column\">\n        <li class=\"nav-item\">\n          <div class=\"nav-link\" (click)=\"set_loyalty_members(true)\"\n            [ngClass]=\"{'active1': loyalty_members, 'non_active1': !loyalty_members}\">\n            <div>Loyalty</div><div>Members</div>\n          </div>\n        </li>\n        <li class=\"nav-item\">\n          <div class=\"nav-link\" (click)=\"set_loyalty_members(false)\"\n            [ngClass]=\"{'active1': !loyalty_members, 'non_active1': loyalty_members}\">\n            <div>Non</div><div>Loyalty</div><div>Members</div>\n          </div>\n        </li>\n      </ul>\n    </div>\n    <div class=\"d-flex flex-column horiz_container\">\n      <div class=\"horiz_tabs\">\n        <ul class=\"nav\">\n          <li class=\"nav-item\">\n            <div class=\"nav-link\" (click)=\"set_loyalty_members(true)\"\n              [ngClass]=\"{'horiz_active1': loyalty_members, 'horiz_non_active1': !loyalty_members}\">\n              Loyalty Members</div>\n          </li>\n          <li class=\"nav-item\">\n            <div class=\"nav-link\" (click)=\"set_loyalty_members(false)\"\n              [ngClass]=\"{'horiz_active1': !loyalty_members, 'horiz_non_active1': loyalty_members}\">\n              Non Loyalty Members</div>\n          </li>\n        </ul>\n      </div>\n      <div class=\"tab_container\">\n        <div class=\"d-flex flex-wrap justify-content-center\">\n          <div class=\"panel\"\n            [ngClass]=\"{'d-block': loyalty_members, 'd-none': !loyalty_members}\">\n            <div class=\"panel-header\">\n              Loyalty Tier Level\n            </div>\n            <!--div class=\"multi_choice\">\n            </div-->\n            <app-multi-select-table [showDeleteButton]=\"false\" [showSaveButton]=\"false\"\n              [options]=\"['Ala','Bala','Nica','Marsilia','Zaro']\">\n            </app-multi-select-table>\n          </div>\n          <div class=\"row0_table_container\">\n              <table class=\"row0_table\">\n                <tr>\n                  <td>Room selection fee</td>\n                  <td  class=\"selection_fee_field\">\n                    <!-- https://stackoverflow.com/questions/6029674/regex-for-positive-float-numbers -->\n                    <app-restricted-text-input\n                      [regex]=\"'^[0-9]*(?:\\\\.[0-9]*)?$'\" [init_value]=\"''\" [disabled]=\"false\">\n                    </app-restricted-text-input>\n                  </td>\n                </tr>\n                <tr>\n                  <td>Upgrade discount</td>\n                  <td>\n                    <app-discount-input-field></app-discount-input-field>\n                  </td>\n                </tr>\n              </table>\n          </div>\n        </div>\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"lable\">Enable</div>\n        </div>\n        <!--div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\"><app-toggle [(checked)]=\"invitation_email\"></app-toggle></div>\n          <div>\n            <table class=\"invitation_email_table text-right\">\n              <tr><td [ngClass]=\"{'tab_row_text':invitation_email, 'tab_row_text_inactive':!invitation_email}\">\n                Send invitation email</td><td></td></tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=alpha_input>upon reservation</label></td>\n                <td>\n                  <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"alpha_input\" [disabled]=\"!invitation_email\">\n                  <label for=alpha_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=beta_input>at</label></td>\n                <td>\n                  <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"beta_input\" [disabled]=\"!invitation_email\">\n                  <label for=beta_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n            </table>\n          </div>\n          <div>\n            <table>\n              <tr><td class=\"days_left_text\">&nbsp;</td></tr>\n              <tr>\n                <td class=\"invitation_email_radio_label\">&nbsp;</td>\n                <td rowspan=\"2\"\n                  [ngClass]=\"{'days_left_text':invitation_email, 'days_left_text_inactive':!invitation_email}\">\n                  <app-restricted-text-input\n                    [regex]=\"'^[0-9]*(?:\\\\.[0-9]*)?$'\" [init_value]=\"''\" [disabled]=\"!invitation_email\">\n                  </app-restricted-text-input>\n                  days left\n                </td>\n              </tr>\n              <tr>\n                <td class=\"invitation_email_radio_label\">&nbsp;</td>\n              </tr>\n            </table>\n          </div>\n        </div-->\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\"><app-toggle [(checked)]=\"room_selection\"></app-toggle></div>\n          <div [ngClass]=\"{'tab_row_text':room_selection, 'tab_row_text_inactive':!room_selection}\">\n            Allow room selection\n          </div>\n        </div>\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\"><app-toggle [(checked)]=\"invitation_email\"></app-toggle></div>\n          <div>\n            <table class=\"invitation_email_table text-right\">\n              <tr><td [ngClass]=\"{'tab_row_text':invitation_email, 'tab_row_text_inactive':!invitation_email}\">\n                Send invitation email</td><td></td></tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=alpha_input>upon reservation</label></td>\n                <td>\n                  <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"alpha_input\" [disabled]=\"!invitation_email\">\n                  <label for=alpha_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=beta_input>at</label></td>\n                <td>\n                  <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"beta_input\" [disabled]=\"!invitation_email\">\n                  <label for=beta_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n            </table>\n          </div>\n          <div class=\"d-flex align-items-center align-self-end invitation_email_days_bgr\"><!---->\n            <span class=\"triangle105x32\"></span>\n            <div [ngClass]=\"{'days_left_text':invitation_email,\n              'days_left_text_inactive':!invitation_email,\n              'invitation_email_days_left_margin':true}\">\n              <app-restricted-text-input\n                [regex]=\"'^(?:.{0}|0|[1-9][0-9]*)$'\" [init_value]=\"''\" [disabled]=\"!invitation_email\">\n              </app-restricted-text-input>\n              days left\n            </div>\n          </div>\n        </div>\n\n\n        <!--div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"d-flex flex-column\" style=\"background-color:pink\">\n              <div class=\"invisible\">Send invitation email</div>\n              <div>\n                <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"alpha_input\" [disabled]=\"!invitation_email\">\n                <label for=alpha_input class=\"checkmark\"></label>\n              </div>\n              <div>\n                <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"beta_input\" [disabled]=\"!invitation_email\">\n                <label for=beta_input class=\"checkmark\"></label>\n              </div>\n          </div>\n          <div class=\"align-self-center\">\n            <app-restricted-text-input\n              [regex]=\"'^[0-9]*(?:\\\\.[0-9]*)?$'\" [init_value]=\"''\" [disabled]=\"!invitation_email\">\n            </app-restricted-text-input>\n            days left\n          </div>\n        </div-->\n\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\"><app-toggle [(checked)]=\"reminder_email\"></app-toggle></div>\n          <div [ngClass]=\"{'tab_row_text':reminder_email, 'tab_row_text_inactive':!reminder_email, 'reminder_margin':true}\">\n            Send reminder email\n          </div>\n          <div [ngClass]=\"{'days_left_text':reminder_email,\n            'days_left_text_inactive':!reminder_email,\n            'reminder_email_days_left_margin':true}\">\n            <app-restricted-text-input\n              [regex]=\"'^(?:.{0}|0|[1-9][0-9]*)$'\" [init_value]=\"''\" [disabled]=\"!reminder_email\">\n            </app-restricted-text-input>\n            days left\n          </div>\n        </div>\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\"><app-toggle [(checked)]=\"confirmation_email\"></app-toggle></div>\n          <div [ngClass]=\"{'tab_row_text':confirmation_email, 'tab_row_text_inactive':!confirmation_email}\">\n            Send confirmation e-mail\n          </div>\n        </div>\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\"><app-toggle [(checked)]=\"upgrade_confirmation_email\"></app-toggle></div>\n          <div [ngClass]=\"{'tab_row_text':upgrade_confirmation_email,\n                          'tab_row_text_inactive':!upgrade_confirmation_email}\">\n            Send upgrade confirmation e-mail\n          </div>\n        </div>\n\n        <div class=\"d-flex justify-content-end\">\n          <button class=\"send_button\">Save</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "\n<div class=\"background d-flex flex-column\">\n  <!--ul class=\"nav flex-column\">\n    <li class=\"nav-item\">\n      <span class=\"nav-link active\" href=\"#\">Loyalty</span>\n    </li>\n    <li class=\"nav-item\">\n      <span class=\"nav-link\" href=\"#\">Not<br/>Loyalty</span>\n    </li>\n  </ul-->\n  <!--div class=\"property-panel\">\n    <table>\n      <tr>\n        <td>Property :</td>\n        <td>\n          <div class=\"\">\n            <select class=\"property-select\">\n             <option value=\"ALTH\">ALTH</option>\n             <option value=\"H1551\">H1551</option>\n             <option value=\"regular\">regular</option>\n           </select>\n          </div>\n        </td>\n      </tr>\n    </table>\n  </div-->\n\n  <div class=\"d-flex flex-row justify-content-center align-items-center\">\n    <div class=\"d-flex flex-row justify-content-center align-items-center property\">\n      <div class=\"property_label\">Property :\n      </div>\n      <div class=\"\">\n       <select #property_select class=\"property-select\"\n          (change)=\"onPropertyChange(property_select.selectedIndex)\">\n          <option *ngFor=\"let loyalty_data of data\"\n            value={{loyalty_data.property}}>{{loyalty_data.property}}\n          </option>\n      </select>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"d-flex flex-row justify-content-center\">\n    <div class=\"tabs\">\n      <ul class=\"nav flex-column\">\n        <li class=\"nav-item\">\n          <div class=\"nav-link\" (click)=\"set_loyalty_members(true)\"\n            [ngClass]=\"{'active1': loyalty_members, 'non_active1': !loyalty_members}\">\n            <div>Loyalty</div><div>Members</div>\n          </div>\n        </li>\n        <li class=\"nav-item\">\n          <div class=\"nav-link\" (click)=\"set_loyalty_members(false)\"\n            [ngClass]=\"{'active1': !loyalty_members, 'non_active1': loyalty_members}\">\n            <div>Non</div><div>Loyalty</div><div>Members</div>\n          </div>\n        </li>\n      </ul>\n    </div>\n    <div class=\"d-flex flex-column horiz_container\">\n      <div class=\"horiz_tabs\">\n        <ul class=\"nav\">\n          <li class=\"nav-item\">\n            <div class=\"nav-link\" (click)=\"set_loyalty_members(true)\"\n              [ngClass]=\"{'horiz_active1': loyalty_members, 'horiz_non_active1': !loyalty_members}\">\n              Loyalty Members</div>\n          </li>\n          <li class=\"nav-item\">\n            <div class=\"nav-link\" (click)=\"set_loyalty_members(false)\"\n              [ngClass]=\"{'horiz_active1': !loyalty_members, 'horiz_non_active1': loyalty_members}\">\n              Non Loyalty Members</div>\n          </li>\n        </ul>\n      </div>\n      <div class=\"tab_container\">\n        <div class=\"d-flex flex-wrap justify-content-center\">\n          <div class=\"panel\"\n            [ngClass]=\"{'d-block': loyalty_members, 'd-none': !loyalty_members}\">\n            <div class=\"panel-header\">\n              Loyalty Tier Level\n            </div>\n            <!--div class=\"multi_choice\">\n            </div-->\n            <app-multi-select-table [showDeleteButton]=\"false\" [showSaveButton]=\"false\"\n              [options]=\"loyalty_members?tab_data.tier_level.all:[]\"\n              (optionsChange)=\"tab_data.tier_level.all=$event\"\n              [selected]=\"loyalty_members?tab_data.tier_level.selected:[]\"\n              (selectedChange)=\"tab_data.tier_level.selected=$event\">\n            </app-multi-select-table>\n          </div>\n          <div class=\"row0_table_container\">\n              <table class=\"row0_table\">\n                <tr>\n                  <td>Room selection fee</td>\n                  <td  class=\"selection_fee_field\">\n                    <input type=\"text\" class=\"restricted-text-input_style\"\n                         [ngModel]=\"tab_data.room_selection_fee\" appRegexMask [regex]=\"'^[0-9]*(?:\\\\.[0-9]*)?$'\" [disabled]=\"false\"\n                         (update)=\"tab_data.room_selection_fee=$event\"/>\n                  </td>\n                </tr>\n                <tr>\n                  <td>Upgrade discount</td>\n                  <td>\n                    <app-discount-input-field\n                      [(value)]=\"tab_data.upgrade_discount_amount\"\n                      [(discountType)]=\"tab_data.upgrade_discount_type_amount\">\n                    </app-discount-input-field>\n                  </td>\n                </tr>\n              </table>\n          </div>\n        </div>\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"lable\">Enable</div>\n        </div>\n        <!--div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\"><app-toggle [(checked)]=\"invitation_email\"></app-toggle></div>\n          <div>\n            <table class=\"invitation_email_table text-right\">\n              <tr><td [ngClass]=\"{'tab_row_text':invitation_email, 'tab_row_text_inactive':!invitation_email}\">\n                Send invitation email</td><td></td></tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=alpha_input>upon reservation</label></td>\n                <td>\n                  <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"alpha_input\" [disabled]=\"!invitation_email\">\n                  <label for=alpha_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=beta_input>at</label></td>\n                <td>\n                  <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"beta_input\" [disabled]=\"!invitation_email\">\n                  <label for=beta_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n            </table>\n          </div>\n          <div>\n            <table>\n              <tr><td class=\"days_left_text\">&nbsp;</td></tr>\n              <tr>\n                <td class=\"invitation_email_radio_label\">&nbsp;</td>\n                <td rowspan=\"2\"\n                  [ngClass]=\"{'days_left_text':invitation_email, 'days_left_text_inactive':!invitation_email}\">\n                  <app-restricted-text-input\n                    [regex]=\"'^[0-9]*(?:\\\\.[0-9]*)?$'\" [value]=\"''\" [disabled]=\"!invitation_email\">\n                  </app-restricted-text-input>\n                  days left\n                </td>\n              </tr>\n              <tr>\n                <td class=\"invitation_email_radio_label\">&nbsp;</td>\n              </tr>\n            </table>\n          </div>\n        </div-->\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\">\n            <app-toggle [(checked)]=\"tab_data.allow_room_selection\"\n              (checkedChange)=\"change_allow_room_selection($event)\">\n            </app-toggle>\n          </div>\n          <div [ngClass]=\"{'tab_row_text':tab_data.allow_room_selection,\n                           'tab_row_text_inactive':!tab_data.allow_room_selection}\">\n            Allow room selection\n          </div>\n        </div>\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\">\n            <app-toggle [(checked)]=\"tab_data.send_invitation_email\"\n              (checkedChange)=\"change_send_invitation_email($event)\"\n              [disabled]=\"!tab_data.allow_room_selection\">\n            </app-toggle>\n          </div>\n          <div>\n            <table class=\"invitation_email_table text-right\">\n              <tr><td [ngClass]=\"{'tab_row_text':tab_data.send_invitation_email,\n                                  'tab_row_text_inactive':!tab_data.send_invitation_email}\">\n                Send invitation email</td><td></td></tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=alpha_input>upon reservation</label></td>\n                <td>\n                  <input type=\"radio\" name=\"radio\" id=\"alpha_input\"\n                    [disabled]=\"!tab_data.send_invitation_email\"\n                    (change)=\"tab_data.send_invitation_email_upon_res=true\"\n                    [checked]=\"tab_data.send_invitation_email_upon_res\"/>\n                  <label for=alpha_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n              <tr><td class=\"invitation_email_radio_label\"><label for=beta_input>at</label></td>\n                <td>\n                  <input type=\"radio\" name=\"radio\" id=\"beta_input\"\n                    [disabled]=\"!tab_data.send_invitation_email\"\n                    (change)=\"tab_data.send_invitation_email_upon_res=false\"\n                    [checked]=\"!tab_data.send_invitation_email_upon_res\"/>\n                  <label for=beta_input class=\"checkmark\"></label>\n                </td>\n              </tr>\n            </table>\n          </div>\n          <div class=\"d-flex align-items-center align-self-end invitation_email_days_bgr\"><!---->\n            <span class=\"triangle105x32\"></span>\n            <div [ngClass]=\"{'days_left_text':invitation_email,\n              'days_left_text_inactive':!invitation_email,\n              'invitation_email_days_left_margin':true}\">\n              <!--app-restricted-text-input\n                [regex]=\"'^(?:.{0}|0|[1-9][0-9]*)$'\" [value]=\"''\" [disabled]=\"!invitation_email\">\n              </app-restricted-text-input-->\n              <input type=\"text\" class=\"restricted-text-input_style\"\n                appRegexMask [regex]=\"'^(?:.{0}|0|[1-9][0-9]*)$'\" [disabled]=\"!tab_data.send_invitation_email\"\n                [ngModel]=\"tab_data.send_invitation_email_days_left\"\n                (update)=\"tab_data.send_invitation_email_days_left=$event\"/>\n              days left\n            </div>\n          </div>\n        </div>\n\n\n        <!--div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"d-flex flex-column\" style=\"background-color:pink\">\n              <div class=\"invisible\">Send invitation email</div>\n              <div>\n                <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"alpha_input\" [disabled]=\"!invitation_email\">\n                <label for=alpha_input class=\"checkmark\"></label>\n              </div>\n              <div>\n                <input type=\"radio\" checked=\"checked\" name=\"radio\" id=\"beta_input\" [disabled]=\"!invitation_email\">\n                <label for=beta_input class=\"checkmark\"></label>\n              </div>\n          </div>\n          <div class=\"align-self-center\">\n            <app-restricted-text-input\n              [regex]=\"'^[0-9]*(?:\\\\.[0-9]*)?$'\" [value]=\"''\" [disabled]=\"!invitation_email\">\n            </app-restricted-text-input>\n            days left\n          </div>\n        </div-->\n\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\">\n            <app-toggle [(checked)]=\"tab_data.send_reminder_email\"\n              [disabled]=\"!tab_data.allow_room_selection || !tab_data.send_invitation_email\">\n            </app-toggle>\n          </div>\n          <div [ngClass]=\"{'tab_row_text':tab_data.send_reminder_email, 'tab_row_text_inactive':!tab_data.send_reminder_email, 'reminder_margin':true}\">\n            Send reminder email\n          </div>\n          <div [ngClass]=\"{'days_left_text':tab_data.send_reminder_email,\n            'days_left_text_inactive':!tab_data.send_reminder_email,\n            'reminder_email_days_left_margin':true}\">\n            <input type=\"text\" class=\"restricted-text-input_style\"\n              appRegexMask [regex]=\"'^(?:.{0}|0|[1-9][0-9]*)$'\" [disabled]=\"!tab_data.send_reminder_email\"\n              [ngModel]=\"tab_data.send_reminder_email_days_left\"\n              (update)=\"tab_data.send_reminder_email_days_left=$event\"/>\n            days left\n          </div>\n        </div>\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\">\n            <app-toggle [(checked)]=\"tab_data.send_confirmation_email\"\n              [disabled]=\"!tab_data.allow_room_selection\">\n            </app-toggle>\n          </div>\n          <div [ngClass]=\"{'tab_row_text':tab_data.send_confirmation_email, 'tab_row_text_inactive':!tab_data.send_confirmation_email}\">\n            Send confirmation e-mail\n          </div>\n        </div>\n\n        <div class=\"d-flex flex-wrap justify-content-start tab_row\">\n          <div class=\"toggle\">\n            <app-toggle [(checked)]=\"tab_data.send_upgrade_confirmation_email\"\n              [disabled]=\"!tab_data.allow_room_selection\">\n            </app-toggle>\n          </div>\n          <div [ngClass]=\"{'tab_row_text':tab_data.send_upgrade_confirmation_email,\n                          'tab_row_text_inactive':!tab_data.send_upgrade_confirmation_email}\">\n            Send upgrade confirmation e-mail\n          </div>\n        </div>\n\n        <div class=\"d-flex justify-content-end\">\n          <button class=\"send_button\">Save</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1285,17 +1438,107 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var LoyaltyComponent = /** @class */ (function () {
     function LoyaltyComponent() {
+        this.property_index = 0;
         this.loyalty_members = true;
         this.invitation_email = true;
         this.reminder_email = true;
         this.room_selection = true;
         this.confirmation_email = true;
         this.upgrade_confirmation_email = true;
+        this.data = [
+            {
+                property: 'H1551',
+                loyalty_members_data: {
+                    tier_level: {
+                        all: ['One', 'Two', 'Three', 'Four', 'Five'],
+                        selected: [true, false, true, false, false]
+                    },
+                    room_selection_fee: 5,
+                    upgrade_discount_type_amount: true,
+                    upgrade_discount_amount: 6,
+                    allow_room_selection: true,
+                    send_invitation_email: true,
+                    send_invitation_email_upon_res: true,
+                    send_invitation_email_days_left: 5,
+                    send_reminder_email: true,
+                    send_reminder_email_days_left: 9,
+                    send_confirmation_email: true,
+                    send_upgrade_confirmation_email: true,
+                },
+                non_loyalty_members_data: {
+                    room_selection_fee: 4,
+                    upgrade_discount_type_amount: true,
+                    upgrade_discount_amount: 5,
+                    allow_room_selection: true,
+                    send_invitation_email: true,
+                    send_invitation_email_upon_res: true,
+                    send_invitation_email_days_left: 5,
+                    send_reminder_email: true,
+                    send_reminder_email_days_left: 9,
+                    send_confirmation_email: false,
+                    send_upgrade_confirmation_email: false,
+                }
+            }, {
+                property: 'ALTH',
+                loyalty_members_data: {
+                    tier_level: {
+                        all: ['One', 'Two', 'Three', 'Four'],
+                        selected: [false, false, true, false]
+                    },
+                    room_selection_fee: 5,
+                    upgrade_discount_type_amount: true,
+                    upgrade_discount_amount: 6,
+                    allow_room_selection: true,
+                    send_invitation_email: true,
+                    send_invitation_email_upon_res: true,
+                    send_invitation_email_days_left: 5,
+                    send_reminder_email: true,
+                    send_reminder_email_days_left: 9,
+                    send_confirmation_email: true,
+                    send_upgrade_confirmation_email: true,
+                },
+                non_loyalty_members_data: {
+                    room_selection_fee: 4,
+                    upgrade_discount_type_amount: true,
+                    upgrade_discount_amount: 5,
+                    allow_room_selection: true,
+                    send_invitation_email: true,
+                    send_invitation_email_upon_res: true,
+                    send_invitation_email_days_left: 5,
+                    send_reminder_email: true,
+                    send_reminder_email_days_left: 9,
+                    send_confirmation_email: false,
+                    send_upgrade_confirmation_email: false,
+                }
+            }
+        ];
+        this.set_loyalty_members(this.loyalty_members);
     }
     LoyaltyComponent.prototype.ngOnInit = function () {
     };
     LoyaltyComponent.prototype.set_loyalty_members = function (new_val) {
         this.loyalty_members = new_val;
+        this.tab_data = new_val ? this.data[this.property_index].loyalty_members_data : this.data[this.property_index].non_loyalty_members_data;
+    };
+    LoyaltyComponent.prototype.onPropertyChange = function (selected_index) {
+        this.property_index = selected_index;
+        this.set_loyalty_members(this.loyalty_members);
+    };
+    LoyaltyComponent.prototype.change_allow_room_selection = function (value) {
+        if (!value) {
+            this.tab_data.send_invitation_email = false;
+            this.tab_data.send_reminder_email = false;
+            this.tab_data.send_confirmation_email = false;
+            this.tab_data.send_upgrade_confirmation_email = false;
+        }
+    };
+    LoyaltyComponent.prototype.change_send_invitation_email = function (value) {
+        if (!value) {
+            this.tab_data.send_reminder_email = false;
+        }
+    };
+    LoyaltyComponent.prototype.printValue = function (value) {
+        console.log(value);
     };
     LoyaltyComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

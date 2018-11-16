@@ -9,15 +9,15 @@ export class ToggleComponent implements OnInit {
 
   private _checked:boolean = true;
   @Output() checkedChange = new EventEmitter<boolean>();
+  @Input()
+  set checked(value: boolean) {
+    this._checked = value;
+  }
+ @Input() disabled:boolean = false;
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  @Input()
-  set checked(value: boolean) {
-    this._checked = value;
   }
 
   get checked(): boolean { return this._checked;}

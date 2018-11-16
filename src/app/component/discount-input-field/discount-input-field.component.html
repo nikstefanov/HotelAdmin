@@ -2,17 +2,20 @@
   <table class="input_table input_container">
     <tr>
       <td rowspan='2'>
-        <input type="text" class="input_field" (keyup)="onKey($event)" (paste)="onPaste($event)"/>
+        <input type="text" class="input_field"
+          appRegexMask [regex]="regex" [disabled]="false"
+          [ngModel]="real_value"
+          (update)="on_text_field_update($event)"/>
       </td>
-      <td rowspan='2' class="discount_label">{{percent_discount?'%':'$'}}
+      <td rowspan='2' class="discount_label">{{discountType?'%':'$'}}
       </td>
-      <td [ngClass]="{'active_button':percent_discount,'non_active_button':!percent_discount}"
-        (click)="set_percent_discount(true)">%
+      <td [ngClass]="{'active_button':discountType,'non_active_button':!discountType}"
+        (click)="set_discount_type(true)">%
       </td>
     </tr>
     <tr>
-      <td [ngClass]="{'active_button':!percent_discount,'non_active_button':percent_discount}"
-        (click)="set_percent_discount(false)">$
+      <td [ngClass]="{'active_button':!discountType,'non_active_button':discountType}"
+        (click)="set_discount_type(false)">$
       </td>
     </tr>
   </table>

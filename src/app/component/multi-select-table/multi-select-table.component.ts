@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef,
+import { Component, Input, ViewChild, ElementRef, Output, EventEmitter,
   AfterContentChecked, AfterContentInit, OnInit } from '@angular/core';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,7 +10,7 @@ import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 export class MultiSelectTableComponent
   implements OnInit, AfterContentChecked, AfterContentInit  {
 
-  @Input() options: String[] = [];
+  @Input() options: string[] = [];
   @Input() showDeleteButton: boolean = true;
   @Input() showSaveButton: boolean = true;
   @Input() onSaveFunction: ()=>void;
@@ -18,6 +18,18 @@ export class MultiSelectTableComponent
   @ViewChild('newOptionTooltip') tooltip: NgbTooltip;
   private optionsMap: boolean[] = []; /*selected items*/
   private newOptionInput: boolean = false;
+  @Output() optionsChange = new EventEmitter<string[]>();
+  @Input() set selected(map:boolean[]){
+    this.optionsMap = [];
+    for (var _i = 0; _i < this.options.length; _i++)
+      if(_i < map.length){
+        this.optionsMap.push(map[_i]);
+      }else{
+        this.optionsMap.push(false);
+      }
+      //console.log(this.optionsMap);
+  }
+  @Output() selectedChange = new EventEmitter<boolean[]>();
 
   constructor() {
   }
@@ -34,6 +46,7 @@ export class MultiSelectTableComponent
 
   private toggleLineSelection(i:number):void{
     this.optionsMap[i] = !this.optionsMap[i];
+    this.selectedChange.emit(this.optionsMap);
   }
 
   private newOption():void{
@@ -60,6 +73,7 @@ export class MultiSelectTableComponent
       this.options.push(event.target.value);
       this.optionsMap.push(false);
       event.target.value = "";
+      this.optionsChange.emit(this.options);
     }
     this.showNewOptionField(false);
   }

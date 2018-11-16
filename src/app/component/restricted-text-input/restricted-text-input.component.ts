@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Input, ViewChild } from '@angular/core';
 
-
 @Component({
   selector: 'app-restricted-text-input',
   templateUrl: './restricted-text-input.component.html'
